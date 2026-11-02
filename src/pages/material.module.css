@@ -1,0 +1,12 @@
+.main { width: min(100% - 3rem, 800px); margin: 0 auto; padding: clamp(4rem, 10vh, 7rem) 0 5rem; }
+.label { color: #007f86; text-transform: uppercase; letter-spacing: .12em; font-size: .75rem; font-weight: 700; }
+.main h1 { margin: 1rem 0 .7rem; font-family: 'Newsreader', Georgia, serif; font-size: clamp(2.2rem, 5vw, 3.4rem); font-weight: 500; }
+.intro { color: #526174; margin-bottom: 2rem; }
+.card { display: flex; align-items: center; gap: 1.1rem; padding: 1.25rem; background: #fff; border: 1px solid #d9e3e8; border-left: 4px solid #007f86; border-radius: 8px; color: #17263a; text-decoration: none; transition: border-color .15s ease, transform .15s ease; }
+.card:hover { color: #17263a; text-decoration: none; border-color: #007f86; transform: translateY(-2px); }
+.number { display: grid; place-items: center; width: 2.6rem; height: 2.6rem; flex: 0 0 auto; color: #005e63; background: #e7f3f2; border-radius: 50%; font-weight: 700; }
+.copy { display: grid; gap: .25rem; }
+.copy strong { font-family: 'Newsreader', Georgia, serif; font-size: 1.3rem; font-weight: 500; }
+.copy small { color: #64748b; font-size: .9rem; }
+.arrow { margin-left: auto; color: #007f86; font-size: 1.3rem; }
+@media (max-width: 500px) { .main { width: min(100% - 2rem, 800px); } }

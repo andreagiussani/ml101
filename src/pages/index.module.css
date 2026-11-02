@@ -1,0 +1,14 @@
+.main { width: min(100% - 3rem, 900px); margin: 0 auto; padding: clamp(4rem, 11vh, 7.5rem) 0 5rem; }
+.kicker { display: flex; align-items: center; gap: .65rem; color: #64748b; text-transform: uppercase; letter-spacing: .12em; font-size: .75rem; font-weight: 700; }
+.kickerMark { width: 9px; height: 9px; background: #f4b942; border-radius: 50%; }
+.main h1 { margin: 1.25rem 0 1rem; font-family: 'Newsreader', Georgia, serif; font-weight: 500; font-size: clamp(2.35rem, 5.2vw, 4rem); line-height: 1.08; letter-spacing: -.025em; }
+.question { margin: 1.5rem 0 .8rem; font-family: 'Newsreader', Georgia, serif; font-size: clamp(1.35rem, 3vw, 1.8rem); color: #007f86; }
+.intro { max-width: 640px; color: #526174; font-size: 1.05rem; line-height: 1.8; }
+.lectureCard { position: relative; display: flex; flex-direction: column; gap: .45rem; max-width: 650px; margin-top: 2.7rem; padding: 1.5rem 3.5rem 1.5rem 1.6rem; border: 1px solid #d9e3e8; border-left: 4px solid #007f86; border-radius: 8px; color: #17263a; text-decoration: none; background: #fff; transition: border-color .15s ease, transform .15s ease; }
+.lectureCard:hover { color: #17263a; text-decoration: none; border-color: #007f86; transform: translateY(-2px); }
+.lectureLabel { color: #007f86; font-size: .72rem; letter-spacing: .1em; font-weight: 700; }
+.lectureTitle { font-family: 'Newsreader', Georgia, serif; font-size: 1.6rem; }
+.lectureSubtitle { color: #64748b; }
+.arrow { position: absolute; top: 1.4rem; right: 1.5rem; color: #007f86; font-size: 1.4rem; }
+.note { max-width: 650px; margin-top: 2rem; color: #64748b; font-size: .92rem; line-height: 1.7; }
+@media (max-width: 500px) { .main { width: min(100% - 2rem, 900px); } .desktopBreak { display: none; } }

@@ -1,0 +1,36 @@
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Newsreader:opsz,wght@6..72,400;6..72,500;6..72,600&display=swap');
+
+:root {
+  --ifm-color-primary: #007f86;
+  --ifm-color-primary-dark: #006f75;
+  --ifm-color-primary-darker: #00696f;
+  --ifm-color-primary-darkest: #00575c;
+  --ifm-color-primary-light: #078c93;
+  --ifm-color-primary-lighter: #15959b;
+  --ifm-color-primary-lightest: #39a8ad;
+  --ifm-font-family-base: 'DM Sans', sans-serif;
+  --ifm-heading-font-family: 'Newsreader', Georgia, serif;
+  --ifm-font-color-base: #17263a;
+  --ifm-background-color: #f7f9fb;
+  --ifm-navbar-background-color: #f7f9fb;
+  --ifm-footer-background-color: #eef2f5;
+  --ifm-code-font-size: 92%;
+  --ifm-global-radius: 8px;
+}
+
+html { scroll-behavior: smooth; }
+body { background: #f7f9fb; color: #17263a; }
+.navbar { box-shadow: none; border-bottom: 1px solid #e4e9ee; }
+.navbar__title { letter-spacing: .02em; }
+.navbar__logo { height: 26px; }
+.footer { border-top: 1px solid #e4e9ee; }
+.theme-doc-markdown { max-width: 760px; }
+.theme-doc-markdown h1 { font-size: clamp(2rem, 4vw, 3rem); }
+.theme-doc-markdown h2 { margin-top: 3.5rem; padding-top: 1.25rem; border-top: 1px solid #e4e9ee; font-size: 1.8rem; }
+.theme-doc-markdown h3 { font-size: 1.3rem; }
+.theme-doc-sidebar-container { background: #f7f9fb; }
+.theme-doc-toc-desktop { border-left-color: #e4e9ee; }
+.chapterDek { margin-top: -.6rem; margin-bottom: 2rem; color: #007f86; font-family: 'Newsreader', Georgia, serif; font-size: 1.35rem; }
+a { text-underline-offset: 3px; }
+::selection { background: #d7eceb; }
+@media (max-width: 996px) { .theme-doc-sidebar-container { display: none; } }

@@ -1,0 +1,10 @@
+.main { max-width: 720px; margin: 0 auto; padding: 5rem 1.5rem; }
+.label { color: #007f86; font-size: .75rem; letter-spacing: .12em; font-weight: 700; }
+.main h1 { margin: 1rem 0 1.5rem; font-size: clamp(2rem, 5vw, 3rem); font-weight: 500; }
+.main > p:not(.label) { color: #526174; line-height: 1.85; }
+.aboutMe { margin-top: 3rem; padding: 1.5rem 1.6rem; background: #fff; border: 1px solid #e2e8ee; border-left: 3px solid #007f86; border-radius: 8px; }
+.aboutMe .label { margin-bottom: .5rem; }
+.aboutMe h2 { margin: 0 0 1rem; font-family: 'Newsreader', Georgia, serif; font-size: 1.8rem; font-weight: 500; }
+.aboutMe p:not(.label) { color: #526174; line-height: 1.8; }
+.profileLink { display: inline-flex; align-items: center; gap: .4rem; margin-top: .3rem; font-size: .92rem; font-weight: 600; }
+.disclaimer { margin-top: 1.5rem; color: #64748b; font-size: .83rem; }
