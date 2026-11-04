@@ -43,7 +43,7 @@ const config: Config = {
       links: [
         { title: 'Explore', items: [{ label: 'Home', to: '/' }, { label: 'Material', to: '/material' }, { label: 'About', to: '/about' }] },
       ],
-      copyright: `ML101 · ${new Date().getFullYear()}`,
+      copyright: `© ${new Date().getFullYear()} Andrea Giussani · ML101`,
     },
     prism: { theme: prismThemes.github },
   } satisfies Config['themeConfig'],
