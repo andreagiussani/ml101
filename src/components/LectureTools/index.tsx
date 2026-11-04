@@ -26,11 +26,23 @@ export function DefinitionReflection() {
   </details>;
 }
 
-const mappingOptions = [
-  { value: 'experience', label: 'The historical applications and repayment outcomes' },
-  { value: 'task', label: 'Predict whether a new applicant will default' },
-  { value: 'performance', label: 'Accuracy on unseen applications' },
-];
+const mappingOptions = {
+  E: [
+    { value: 'task', label: 'Predict whether a new applicant will default' },
+    { value: 'experience', label: 'The historical applications and repayment outcomes' },
+    { value: 'performance', label: 'Accuracy on unseen applications' },
+  ],
+  T: [
+    { value: 'task', label: 'Predict whether a new applicant will default' },
+    { value: 'performance', label: 'Accuracy on unseen applications' },
+    { value: 'experience', label: 'The historical applications and repayment outcomes' },
+  ],
+  P: [
+    { value: 'experience', label: 'The historical applications and repayment outcomes' },
+    { value: 'task', label: 'Predict whether a new applicant will default' },
+    { value: 'performance', label: 'Accuracy on unseen applications' },
+  ],
+};
 
 export function ExperienceTaskPerformance() {
   const [answers, setAnswers] = useState({ E: '', T: '', P: '' });
@@ -51,7 +63,7 @@ export function ExperienceTaskPerformance() {
         <span><strong>{part}</strong><span>{labels[part]}</span></span>
         <select value={answers[part]} onChange={(event) => update(part, event.target.value)} aria-label={`${labels[part]} example`}>
           <option value="">Choose a match…</option>
-          {mappingOptions.map((option) => <option key={option.value} value={option.value}>{option.label}</option>)}
+          {mappingOptions[part].map((option) => <option key={option.value} value={option.value}>{option.label}</option>)}
         </select>
       </label>)}
     </div>
