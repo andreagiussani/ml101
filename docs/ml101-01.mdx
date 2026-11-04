@@ -6,87 +6,81 @@ sidebar_position: 1
 slug: /ml101-01
 ---
 
-import { DiscussionQuestion, ExperienceTaskPerformance, ProgrammingComparison, PredictionVsCausation, MLHistoryTimeline, AlgorithmsDataCompute } from '@site/src/components/LectureTools';
+import { DiscussionQuestion, DefinitionReflection, LearningQuestion, ExperienceTaskPerformance, ProgrammingComparison, PredictionVsCausation, MLHistoryTimeline, AlgorithmsDataCompute, ComputerEngineeringDecision } from '@site/src/components/LectureTools';
 
 # What is Machine Learning?
 
 <p className="chapterDek">A short history of an old idea.</p>
 
-Machine learning is often discussed as if it were entirely new. But what do we mean when we say that a machine *learns*? To answer, we will trace an idea from early checkers programs to today’s methods—and keep asking what makes a prediction trustworthy.
-
-<DiscussionQuestion>What do you think Machine Learning actually is?</DiscussionQuestion>
+**Introduction to Machine Learning does not mean Easy Machine Learning.** We will begin with a simple question and use it to trace an idea from checkers programs to today’s methods.
 
 ## 1. What is Machine Learning?
 
-Here is a useful working definition for this discussion—it is ours, not yet a textbook definition:
+<LearningQuestion />
+
+A system can make predictions without learning from examples. For this chapter, use the following working definition:
 
 > **A system learns from examples and uses what it learns to perform a task.**
 
-It is deliberately simple. It says that examples matter and that learning is connected to a task. But what is missing from this definition? What would you challenge? What counts as an example or as learning, and how do we tell whether the system performs the task well? We will return to our answers at the end.
+<DefinitionReflection />
 
 ## 2. When Did Machine Learning Begin?
 
-The idea predates today’s generative systems. In 1959, Arthur Samuel described work aimed at giving computers the ability to learn without explicitly programming every action. His example was a checkers program that improved through experience. How does this compare with our working definition? ([Samuel, 1959](#ref-samuel))
+In 1959, **Arthur Samuel** described work on giving computers the ability to learn without explicitly programming every action. His checkers program improved through experience. ([Samuel, 1959](#ref-samuel))
 
-In 1997, Tom Mitchell gave a compact way to describe when a computer program learns. A program learns from **Experience (E)** with respect to a **Task (T)** and a **Performance measure (P)** if its performance at the task, as measured by P, improves with experience E. For checkers, experience could be past games, the task is playing, and performance might be measured by win rate. More experience counts as learning only if it improves measured performance on the task. ([Mitchell, 1997, Chapter 1](#ref-mitchell))
+In 1997, **Tom Mitchell** made the idea more precise: a program learns from **Experience (E)** with respect to a **Task (T)** and a **Performance measure (P)** if its performance at the task, as measured by P, improves with experience E. ([Mitchell, 1997, Chapter 1](#ref-mitchell))
 
 <ExperienceTaskPerformance />
 
-This framing helps distinguish two simplified ways of making a program. Both use data and produce outputs. In traditional programming, rules and inputs produce outputs. In supervised learning, examples pair inputs with outcomes and are used to produce a learned rule.
+Both traditional programming and supervised learning use data and produce outputs. The difference is where the rules come from:
 
 <ProgrammingComparison />
 
-The machine is not free from programming: we program a learning procedure instead of specifying every decision rule. The learned system still needs a clearly defined task and a way to judge its performance.
+We still program the learning procedure. The examples help that procedure produce a rule for the task.
 
 ## 3. Machine Learning and Statistics
 
-Is Machine Learning just statistics? Learning from evidence is a fundamental statistical idea. Bayesian updating is one example: new evidence updates our belief about a hypothesis. In notation, the posterior probability of a hypothesis given data is: `P(H | D) = P(D | H) × P(H) / P(D)`. Here, `H` is the hypothesis and `D` is the observed data. This connection does not mean Machine Learning and Bayesian Statistics are the same thing.
+Machine Learning and Statistics overlap. Bayesian updating is one example of learning from evidence: new data update a belief about a hypothesis. In notation, `P(H | D) = P(D | H) × P(H) / P(D)`, where `H` is a hypothesis and `D` is observed data. The two fields are connected, but they are not identical.
 
-Statistics and Machine Learning overlap deeply. Different objectives often matter more than disciplinary labels. An explanatory question might ask which factors are associated with default, how uncertain those relationships are, and what we can infer. A predictive question asks how well we can predict default for a customer we have never seen. These aims can overlap, but they are not interchangeable.
-
-In Economics, consider a lender estimating which applicants are likely to default on a loan. Suppose customers with lower income are more likely to default. Given a customer’s income, how likely are they to default? That is a predictive question. If we increased that customer’s income, would their probability of default decrease? That is a causal question. A predictive pattern alone cannot answer it.
+Statistical explanation and prediction ask related but different questions. An explanatory analysis may ask which factors are associated with loan default and how uncertain that relationship is. A predictive analysis asks how well we can forecast default for an applicant we have not seen.
 
 <PredictionVsCausation />
 
-Prediction asks what is likely to happen. Causation asks what would happen under a change. **Prediction does not establish causation.** Keeping that distinction in view matters when a model’s output informs decisions about people.
-
 ## 4. Where Does Machine Learning Come From?
 
-Machine learning draws on contributions from several fields:
+Machine Learning draws on several fields:
 
-- **Mathematics** contributes optimization and probability.
-- **Statistics** contributes inference and generalization.
-- **Computer Science** contributes algorithms and complexity.
+- **Mathematics:** probability and optimization.
+- **Statistics:** inference and reasoning from data.
+- **Computer Science:** algorithms and computational complexity.
 
-Computer Science and Computer Engineering are connected, but they emphasize different questions. Computer Science asks how to design and analyze algorithms, representations, and learning methods. Computer Engineering and systems ask how to make computation fast, scalable, reliable, and economically practical. Their boundaries overlap, and both matter.
+Computer Science and Computer Engineering overlap, but often emphasize different questions. Consider the difference:
+
+<ComputerEngineeringDecision />
 
 ## 5. A Short History of Machine Learning
 
-The field has developed through many ideas, not a single replacement of old methods by new ones. Select a milestone to explore the expanding toolbox.
+Select a milestone to explore. The history is an expanding toolbox, not a sequence in which each new method makes all earlier ones obsolete.
 
 <MLHistoryTimeline />
 
-The 1950s brought learning programs and early neural-network models. Decision trees and backpropagation became influential in the 1980s. Regularization, support vector machines, bagging, and boosting added to the toolbox during the 1990s. In 2001, Random Forests and Gradient Boosting became influential approaches for prediction on structured data. ([Rumelhart, Hinton & Williams, 1986](#ref-rumelhart); [Breiman, 2001](#ref-breiman); [Friedman, 2001](#ref-friedman))
-
-The sequence is a reminder that machine learning did not start with modern generative AI. New techniques expand the toolbox; they rarely erase older ones.
-
 ## 6. Why Did Deep Learning Accelerate?
 
-Deep learning’s rise reflects several ingredients changing together: **algorithms**, **data**, and **compute**. Algorithms include better architectures and training techniques. Data includes more digital examples and useful benchmarks. Compute includes GPUs, specialized hardware, and scalable systems.
+Deep learning’s progress reflects the interaction of **algorithms**, **data**, and **compute**:
 
 <AlgorithmsDataCompute />
 
-The visual relationship is a **metaphor**, not a scientific equation. Its point is that the ingredients interact. The lecture’s example is AlexNet and ImageNet in 2012: a deep neural network showed striking progress on large-scale image recognition, with GPUs, data, architecture, and training choices all contributing. ([Krizhevsky, Sutskever & Hinton, 2012](#ref-krizhevsky))
+This relationship is a teaching metaphor, not a scientific equation. In 2012, AlexNet’s ImageNet result demonstrated the promise of deep neural networks for image recognition, with data, algorithms, and GPU computing contributing to the result. ([Krizhevsky, Sutskever & Hinton, 2012](#ref-krizhevsky))
 
-In 2017, “Attention Is All You Need” introduced the Transformer architecture. In 2020, “Language Models are Few-Shot Learners” demonstrated the potential of scaling Transformer-based language models. The foundations of modern generative AI predate ChatGPT’s arrival in 2022. ([Vaswani et al., 2017](#ref-vaswani))
+Transformers arrived in 2017; GPT-3 followed in 2020. These developments built on earlier ideas and systems. ([Vaswani et al., 2017](#ref-vaswani))
 
 ## 7. Are Better Algorithms Always Better?
 
-Is a more sophisticated algorithm always a better decision?
+**Is a more sophisticated algorithm always a better decision?**
 
-An algorithm learns from the examples it receives. If those data are biased, incomplete, outdated, or simply incorrect, the resulting predictions can be unreliable. A technically powerful model cannot make missing information appear or guarantee that the examples represent the situation where its predictions will be used.
+Models learn from the examples they receive. If data are biased, incomplete, outdated, or incorrect, predictions may be unreliable. A powerful model cannot guarantee that its examples represent the people or conditions where it will be used.
 
-Return to our working definition: **a system learns from examples and uses what it learns to perform a task.** The examples, the task, and the measure of performance all matter. “Better” depends on what the system learned from, what it is asked to do, and how well its performance is judged.
+Return to the working definition: a system learns from examples to perform a task. What it learns, and whether that is useful, depends on the examples, the task, and how performance is judged.
 
 ### Three takeaways
 
@@ -96,9 +90,7 @@ Return to our working definition: **a system learns from examples and uses what 
 
 <DiscussionQuestion>How do we turn imperfect data into reliable predictions?</DiscussionQuestion>
 
-### References
-
-Selected references and further reading from the lecture:
+## References
 
 #### Samuel, A. L. (1959) {#ref-samuel}
 
@@ -112,6 +104,14 @@ Selected references and further reading from the lecture:
 
 “Learning representations by back-propagating errors.” *Nature*.
 
+#### Cortes & Vapnik (1995) {#ref-cortes-vapnik}
+
+[“Support-vector networks.”](https://doi.org/10.1007/BF00994018) *Machine Learning*, 20, 273–297.
+
+#### Tibshirani (1996) {#ref-tibshirani}
+
+[“Regression Shrinkage and Selection via the Lasso.”](https://doi.org/10.1111/j.2517-6161.1996.tb02080.x) *Journal of the Royal Statistical Society: Series B (Methodological)*, 58(1), 267–288.
+
 #### Breiman (2001) {#ref-breiman}
 
 “Random Forests.” *Machine Learning*.
@@ -122,7 +122,7 @@ Selected references and further reading from the lecture:
 
 #### Friedman (2001) {#ref-friedman}
 
-“Gradient Boosting.” *Annals of Statistics*.
+“Greedy Function Approximation: A Gradient Boosting Machine.” *Annals of Statistics*.
 
 #### Vaswani et al. (2017) {#ref-vaswani}
 
