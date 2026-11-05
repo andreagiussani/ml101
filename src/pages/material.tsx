@@ -16,6 +16,11 @@ export default function Material(): React.ReactElement {
         <span className={styles.copy}><strong>What is Machine Learning?</strong><small>A short history of an old idea.</small></span>
         <span className={styles.arrow} aria-hidden="true">↗</span>
       </Link>
+      <Link className={styles.card} to="/lectures/ml101-02">
+        <span className={styles.number}>02</span>
+        <span className={styles.copy}><strong>Missing Data: When Information Is Incomplete</strong><small>Imputation, similarity, and what an estimate can tell us.</small></span>
+        <span className={styles.arrow} aria-hidden="true">↗</span>
+      </Link>
     </main>
   </Layout>;
 }
