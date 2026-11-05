@@ -7,7 +7,7 @@ export default function About(): React.ReactElement {
   return <Layout><Head><title>About · ML101</title><meta name="description" content="About ML101 and its author, Andrea Giussani" /></Head><main className={styles.main}>
     <p className={styles.label}>ABOUT THIS TEXTBOOK</p>
     <h1>Learning alongside the lecture.</h1>
-    <p>ML101 is an interactive companion to an Introduction to Machine Learning course for undergraduate Economics students. It turns lecture ideas into a readable chapter with prompts and small interactions for reflection.</p>
+    <p>ML101 is an interactive companion to an Introduction to Machine Learning course for undergraduate students. It turns lecture ideas into a readable chapter with prompts and small interactions for reflection.</p>
     <section className={styles.aboutMe} aria-labelledby="about-me-heading">
       <p className={styles.label}>A NOTE ABOUT ME</p>
       <h2 id="about-me-heading">Andrea Giussani</h2>
