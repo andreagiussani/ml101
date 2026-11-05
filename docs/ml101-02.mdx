@@ -1,0 +1,135 @@
+---
+id: ml101-02
+title: 'Lecture 02 — Missing Data: When Information Is Incomplete'
+description: 'How do we make useful predictions when some information is missing?'
+sidebar_position: 2
+slug: /ml101-02
+---
+
+import { DiscussionQuestion } from '@site/src/components/LectureTools';
+import { MissingDataDecision, KNNImputationExplorer, DistanceScaleExplorer, RelationshipShapeExplorer, EuclideanDistanceFormula, BayesianRidgeFormula, MissForestStepper } from '@site/src/components/LectureTools/Lecture02';
+
+# Missing Data
+
+<p className="chapterDek">When information is incomplete</p>
+
+An incomplete dataset invites quick fixes. Before choosing one, ask what information is missing, why it is missing, and what a filled-in value would mean.
+
+## 1. The missing value in the spreadsheet
+
+A company has six customer records, but two values are missing. The manager needs the dataset in 30 minutes.
+
+| Customer | Age | Education | Income (k€) |
+|:--|--:|:--|--:|
+| A | 25 | Bachelor | 35 |
+| B | 42 | Master | 85 |
+| C | 38 | Master | — |
+| D | 51 | PhD | 95 |
+| E | 29 | Bachelor | 45 |
+| F | — | Master | 75 |
+
+<MissingDataDecision />
+
+## 2. Why is the information missing?
+
+Suppose high-income customers are less likely to disclose their income. The observed incomes may then under-represent the customers whose incomes are missing. A sophisticated imputer does not automatically remove that selection bias.
+
+The missingness mechanism matters: an estimate can only be as informative as the observations and assumptions behind it.
+
+## 3. KNN imputation: who is “similar”?
+
+**K-nearest neighbours (KNN)** looks for observations that are close on the features available for comparison. To impute a missing value, it uses the corresponding values from those neighbours. For a numerical target, a simple choice is their mean.
+
+For two observations, the distance combines their differences across the features being compared:
+
+<EuclideanDistanceFormula />
+
+Explore the lecture’s example. Move *k* and watch both the neighbours and the income estimate change.
+
+<KNNImputationExplorer />
+
+## 4. Does scale matter?
+
+Age and income are measured in very different units. In the example below, customers differ by 10 years and €100. Squared raw differences contribute 100 for age and 10,000 for income to the distance calculation.
+
+<DistanceScaleExplorer />
+
+Standardization expresses each difference in units of its feature’s standard deviation. This can make features more comparable for a distance calculation; it does not decide which features are useful or make the missingness mechanism disappear.
+
+The deck’s minimal Python example standardizes the features before applying `KNNImputer` with three neighbours, then converts completed values back to the original scale:
+
+```python
+import numpy as np
+from sklearn.preprocessing import StandardScaler
+from sklearn.impute import KNNImputer
+
+X = np.array([
+    [30, 40000], [39, 40100], [35, np.nan],
+    [36, 40500], [42, 42000], [24, 39000],
+])
+
+scaler = StandardScaler()
+Z = scaler.fit_transform(X)
+Z_completed = KNNImputer(n_neighbors=3).fit_transform(Z)
+X_completed = scaler.inverse_transform(Z_completed)
+```
+
+`StandardScaler` is a scikit-learn transformer. `fit` learns each feature’s mean and standard deviation; `transform` applies that scaling. `fit_transform` runs both steps on the same data, while `inverse_transform` returns values to their original units.
+
+KNN imputation is intuitive, can capture local patterns, and does not require specifying a regression relationship. Its result depends on *k* and the distance features; computation can become expensive, and distances can become less informative in high-dimensional data.
+
+## 5. From neighbours to relationships
+
+Instead of borrowing values from nearby observations, we can model a target from other variables. Bayesian Ridge uses a linear predictor with a probability model for the target:
+
+<BayesianRidgeFormula />
+
+Its priors regularize the coefficients and support predictive uncertainty, while the mean relationship remains linear in the supplied features.
+
+Bayesian Ridge is a regression estimator; using it for an entire incomplete table requires an additional procedure. And when might a straight-line relationship be a poor description?
+
+<RelationshipShapeExplorer />
+
+The temperature–electricity pattern is schematic, not measured data. A linear model can represent a curved relationship if useful nonlinear features are supplied. More flexibility is a capability, not a guarantee of better imputations.
+
+## 6. MissForest: flexible relationships, iterative updates
+
+**MissForest** uses regression forests to impute missing values. It can model potentially nonlinear relationships and interactions, and it can predict numerical or categorical targets. ([Stekhoven & Bühlmann, 2012](#ref-missforest))
+
+When several columns are incomplete, a variable may itself be missing from the predictors. MissForest handles this iteratively: initialize missing entries, order variables by their amount of missingness, predict each variable’s missing values from its observed rows, update the table, and repeat.
+
+<MissForestStepper />
+
+This is a simplified teaching view of Algorithm 1. The paper’s actual stopping criterion compares changes across iterations. [Read the original pseudocode](https://doi.org/10.1093/bioinformatics/btr597).
+
+## 7. How can researchers evaluate imputed values?
+
+When the original value is known, researchers can hide selected observed values, impute them, and compare estimates with the values that were hidden.
+
+- **Numerical variables — normalized root mean squared error (NRMSE):** `sqrt(mean((X_true − X_imputed)²) / Var(X_true))`.
+- **Categorical variables — proportion falsely classified (PFC):** incorrect imputations divided by the number of hidden categorical entries.
+
+For both measures, lower is better. This experiment evaluates artificial missingness in benchmark data. It does not prove that the imputer will perform the same way when people selectively withhold information.
+
+When reading the paper’s results, compare numerical and categorical errors separately, and ask whether MissForest has the lowest error in every setting. A lower imputation error does not automatically imply better downstream predictions. One imputed value is still an estimate, not the recovered ground truth.
+
+## 8. Take the estimate seriously (but not literally)
+
+- The reason data are missing can shape what the observed data represent.
+- KNN estimates depend on the distance, feature scales, and choice of *k*.
+- Flexible methods can represent richer relationships, but flexibility alone does not ensure better results.
+- Evaluation on artificially hidden values cannot fully reproduce real-world selective missingness.
+
+Missing information can become a prediction problem. **But a prediction is not an observation.**
+
+<DiscussionQuestion>Would you trust an imputed income when making a lending decision? What additional information would you want?</DiscussionQuestion>
+
+## References
+
+#### Stekhoven & Bühlmann (2012) {#ref-missforest}
+
+[“MissForest—non-parametric missing value imputation for mixed-type data.”](https://doi.org/10.1093/bioinformatics/btr597) *Bioinformatics*, 28(1), 112–118.
+
+#### Python implementation
+
+The [`missingpy` Python implementation](https://github.com/epsilon-machine/missingpy) provides a MissForest imputer with a scikit-learn-style interface. This code reference is separate from the original research paper above.

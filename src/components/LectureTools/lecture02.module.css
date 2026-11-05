@@ -1,0 +1,65 @@
+.exercise, .graphCard { margin: 1.5rem 0 2rem; padding: clamp(1rem, 3vw, 1.4rem); background: #fff; border: 1px solid #e2e8ee; border-radius: 10px; }
+.formulaBox { margin: 1rem 0 1.25rem; padding: clamp(1rem, 3vw, 1.3rem); border: 1px solid #c8e0df; border-left: 4px solid #007f86; border-radius: 8px; background: #f3f9f8; }
+.formulaLabel { margin: 0 0 .55rem; color: #007f86; text-transform: uppercase; letter-spacing: .08em; font-size: .72rem; font-weight: 700; }
+.formula { margin: 0; color: #17263a; font-family: Georgia, 'Times New Roman', serif; font-size: clamp(1rem, 2.8vw, 1.35rem); line-height: 1.8; overflow-wrap: anywhere; }
+.radicalContent { display: inline-block; padding: 0 .15em; border-top: 1px solid currentColor; }
+.formulaBox figcaption { margin-top: .5rem; color: #526174; font-size: .9rem; }
+.exercise { border-left: 3px solid #007f86; }
+.graphCard { overflow: hidden; }
+.eyebrow { margin: 0 0 .35rem; color: #007f86; text-transform: uppercase; letter-spacing: .09em; font-size: .72rem; font-weight: 700; }
+.exercise h3, .graphCard h3 { margin: .25rem 0 .65rem; font-size: 1.2rem; line-height: 1.4; }
+.intro { color: #526174; }
+.choices { display: grid; gap: .5rem; margin: .8rem 0; padding: 0; border: 0; }
+.choices legend { margin-bottom: .25rem; color: #64748b; font-size: .9rem; }
+.choice { display: flex; align-items: flex-start; gap: .65rem; padding: .65rem .75rem; border: 1px solid #e2e8ee; border-radius: 6px; cursor: pointer; line-height: 1.45; }
+.choice:hover { background: #f7f9fb; }
+.choice input { flex: 0 0 auto; margin-top: .2rem; accent-color: #007f86; }
+.choice:focus-within { outline: 3px solid #f4b942; outline-offset: 2px; }
+.feedback, .liveResult { margin: 1rem 0 0; padding: .9rem 1rem; background: #edf6f5; border-radius: 6px; color: #263b4b; }
+.caption { margin: .8rem 0 0; color: #64748b; font-size: .9rem; }
+.controlRow { display: grid; grid-template-columns: auto minmax(130px, 1fr); align-items: center; gap: .75rem 1rem; margin: 1rem 0 .5rem; }
+.controlRow label { font-weight: 600; }
+.controlRow output { display: inline-grid; min-width: 1.65rem; height: 1.65rem; place-items: center; margin-left: .25rem; border-radius: 50%; background: #e7f3f2; color: #005e63; }
+.controlRow input { width: 100%; accent-color: #007f86; }
+.controlRow input:focus-visible { outline: 3px solid #f4b942; outline-offset: 3px; }
+.graphFigure { margin: 1rem 0 .25rem; padding: .35rem; background: #fbfcfd; border: 1px solid #e8edf1; border-radius: 8px; }
+.graphFigure svg { display: block; width: 100%; height: auto; max-height: 390px; }
+.graphFigure figcaption { padding: .35rem .5rem .1rem; color: #64748b; font-size: .82rem; text-align: center; }
+.gridLine { stroke: #e8edf1; stroke-width: 1; }
+.axis, .tickLine { stroke: #94a3b8; stroke-width: 1.2; }
+.tickLabel { fill: #64748b; font: 12px 'DM Sans', sans-serif; }
+.axisLabel { fill: #35465b; font: 13px 'DM Sans', sans-serif; }
+.queryLine { stroke: #d89a24; stroke-width: 2; stroke-dasharray: 5 5; }
+.neighborLink { stroke: #83b9b6; stroke-width: 1.5; stroke-dasharray: 4 4; }
+.nearestPoint { fill: #007f86; stroke: #fff; stroke-width: 2.5; }
+.distantPoint { fill: #cbd5df; stroke: #fff; stroke-width: 2; }
+.pointLabel { fill: #35465b; font: 12px 'DM Sans', sans-serif; font-weight: 700; }
+.estimatePoint { fill: #f4b942; stroke: #17263a; stroke-width: 2; }
+.queryLabel { fill: #9a6711; font: 12px 'DM Sans', sans-serif; font-weight: 700; }
+.note { margin: .8rem 0 0; padding: .8rem 1rem; border-left: 2px solid #f4b942; background: #fff9e9; color: #526174; font-size: .92rem; }
+.toggleGroup { display: flex; flex-wrap: wrap; gap: .5rem; margin: .9rem 0; }
+.button, .selectedButton, .stepButton, .stepSelected { padding: .55rem .8rem; border: 1px solid #d8e1e8; border-radius: 6px; background: #fff; color: #17263a; font: inherit; cursor: pointer; }
+.selectedButton, .stepSelected { background: #e7f3f2; border-color: #007f86; color: #005e63; font-weight: 600; }
+.button:focus-visible, .selectedButton:focus-visible, .stepButton:focus-visible, .stepSelected:focus-visible { outline: 3px solid #f4b942; outline-offset: 2px; }
+.barChart { display: grid; gap: .9rem; margin: 1.15rem 0 .5rem; }
+.barRow { display: grid; gap: .35rem; }
+.barHead { display: flex; justify-content: space-between; align-items: baseline; gap: .8rem; }
+.barHead code { color: #526174; background: transparent; text-align: right; }
+.barTrack { width: 100%; height: 1.1rem; overflow: hidden; background: #f1f4f6; border-radius: 99px; }
+.barTrack span { display: block; height: 100%; min-width: 3px; border-radius: inherit; transition: width .2s ease; }
+.ageBar { background: #007f86; }
+.incomeBar { background: #f4b942; }
+.scaleReadout { margin: .15rem 0 0; color: #526174; font-size: .9rem; }
+.mildLine { stroke: #d89a24; stroke-width: 1.5; stroke-dasharray: 4 5; }
+.curve { fill: none; stroke: #007f86; stroke-width: 5; stroke-linecap: round; }
+.line { fill: none; stroke: #007f86; stroke-width: 5; stroke-linecap: round; }
+.stepTrack { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: .5rem; margin: 1rem 0; }
+.stepButton, .stepSelected { display: flex; align-items: center; gap: .5rem; text-align: left; }
+.stepButton span, .stepSelected span { color: #007f86; font-size: .75rem; font-weight: 700; }
+@media (max-width: 600px) {
+  .controlRow { grid-template-columns: 1fr; gap: .35rem; }
+  .barHead { align-items: flex-start; flex-direction: column; gap: .15rem; }
+  .stepTrack { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .stepButton, .stepSelected { min-height: 3.2rem; }
+}
+@media (prefers-reduced-motion: reduce) { .barTrack span { transition: none; } }
