@@ -43,7 +43,7 @@ const config: Config = {
       links: [
         { title: 'Explore', items: [{ label: 'Home', to: '/' }, { label: 'Material', to: '/material' }, { label: 'About', to: '/about' }] },
       ],
-      copyright: `© ${new Date().getFullYear()} Andrea Giussani<br /><small>If you reuse this educational material, you must cite it as: Andrea Giussani (2026), probablyml.com. The original content is licensed under <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a>. Please indicate adaptations and retain citations to the original sources. <a href="https://github.com/andreagiussani/ml101/blob/main/CONTENT-LICENSE.md">Reuse details</a>.</small>`,
+      copyright: `© ${new Date().getFullYear()} Andrea Giussani<br /><small>If you reuse this educational material, you must cite it as: Andrea Giussani (2026), probablyml.com. The original content is licensed under <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a>. Please indicate adaptations and retain citations to the original sources.</small>`,
     },
     prism: { theme: prismThemes.github },
   } satisfies Config['themeConfig'],
