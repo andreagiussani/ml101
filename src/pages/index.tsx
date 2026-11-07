@@ -22,7 +22,7 @@ export default function Home(): React.ReactElement {
           </Link>
           <Link className={styles.lectureCard} to="/lectures/ml101-02">
             <span className={styles.lectureLabel}>LECTURE 02</span>
-            <span className={styles.lectureTitle}>Missing Data</span>
+            <span className={styles.lectureTitle}>Can we trust our data?</span>
             <span className={styles.lectureSubtitle}>When information is incomplete.</span>
             <span className={styles.arrow} aria-hidden="true">↗</span>
           </Link>

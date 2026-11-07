@@ -18,7 +18,7 @@ export default function Material(): React.ReactElement {
       </Link>
       <Link className={styles.card} to="/lectures/ml101-02">
         <span className={styles.number}>02</span>
-        <span className={styles.copy}><strong>Missing Data: When Information Is Incomplete</strong><small>Imputation, similarity, and what an estimate can tell us.</small></span>
+        <span className={styles.copy}><strong>Can we trust our data?</strong><small>When information is incomplete.</small></span>
         <span className={styles.arrow} aria-hidden="true">↗</span>
       </Link>
     </main>
