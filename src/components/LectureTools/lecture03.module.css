@@ -42,7 +42,7 @@
 }
 @media (prefers-reduced-motion: reduce) { .explorer *, .explorer *::before, .explorer *::after { scroll-behavior: auto !important; transition: none !important; } }
 
-/* Lecture 03: compact sample comparisons and qualitative trade-off explorer */
+/* Compact sample comparisons and qualitative trade-off explorer */
 .sampleGrid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: .55rem; margin: 1rem 0 .5rem; }
 .sampleTile { min-width: 0; padding: .5rem .55rem .35rem; border: 1px solid #e7edf0; border-radius: 7px; background: #fbfcfd; }
 .sampleTile > span { color: #64748b; font-size: .7rem; font-variant-numeric: tabular-nums; }

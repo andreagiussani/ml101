@@ -15,19 +15,16 @@ export default function Home(): React.ReactElement {
         <p className={styles.intro}>An interactive textbook for undergraduate students. Explore how machine learning learns from examples, handles incomplete information, and balances fit with reliable predictions.</p>
         <div className={styles.lectureGrid} aria-label="Course material">
           <Link className={styles.lectureCard} to="/lectures/ml101-01">
-            <span className={styles.lectureLabel}>LECTURE 01</span>
             <span className={styles.lectureTitle}>What is Machine Learning?</span>
             <span className={styles.lectureSubtitle}>A short history of an old idea.</span>
             <span className={styles.arrow} aria-hidden="true">↗</span>
           </Link>
           <Link className={styles.lectureCard} to="/lectures/ml101-02">
-            <span className={styles.lectureLabel}>LECTURE 02</span>
             <span className={styles.lectureTitle}>Can we trust our data?</span>
             <span className={styles.lectureSubtitle}>When information is incomplete.</span>
             <span className={styles.arrow} aria-hidden="true">↗</span>
           </Link>
           <Link className={styles.lectureCard} to="/lectures/ml101-03">
-            <span className={styles.lectureLabel}>LECTURE 03</span>
             <span className={styles.lectureTitle}>Can we trust a perfect fit?</span>
             <span className={styles.lectureSubtitle}>The price of fitting the data.</span>
             <span className={styles.arrow} aria-hidden="true">↗</span>

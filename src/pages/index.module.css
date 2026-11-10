@@ -7,7 +7,6 @@
 .lectureGrid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 1rem; max-width: 850px; margin-top: 2.4rem; }
 .lectureCard { position: relative; display: flex; flex-direction: column; gap: .45rem; min-height: 150px; padding: 1.35rem 3.5rem 1.35rem 1.4rem; border: 1px solid #d9e3e8; border-left: 4px solid #007f86; border-radius: 8px; color: #17263a; text-decoration: none; background: #fff; transition: border-color .15s ease, transform .15s ease; }
 .lectureCard:hover { color: #17263a; text-decoration: none; border-color: #007f86; transform: translateY(-2px); }
-.lectureLabel { color: #007f86; font-size: .72rem; letter-spacing: .1em; font-weight: 700; }
 .lectureTitle { font-family: 'Newsreader', Georgia, serif; font-size: 1.6rem; }
 .lectureSubtitle { color: #64748b; }
 .arrow { position: absolute; top: 1.4rem; right: 1.5rem; color: #007f86; font-size: 1.4rem; }
