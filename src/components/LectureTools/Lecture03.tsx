@@ -169,7 +169,7 @@ type FormulaName = 'decomposition' | 'olsObjective' | 'olsVariance' | 'regulariz
 const mathNode = (name: string, ...children: React.ReactNode[]) => React.createElement(name as React.ElementType, null, ...children);
 const mi = (value: string) => mathNode('mi', value);
 const mn = (value: string) => mathNode('mn', value);
-const mo = (value: string) => mathNode('mo', value);
+const mo = (value: string) => React.createElement('mo', { stretchy: 'false' }, value);
 const row = (...items: React.ReactNode[]) => mathNode('mrow', ...items);
 const sub = (base: React.ReactNode, index: React.ReactNode) => mathNode('msub', base, index);
 const sup = (base: React.ReactNode, index: React.ReactNode) => mathNode('msup', base, index);
@@ -213,11 +213,15 @@ function formulaContent(formula: FormulaName): React.ReactNode[] {
     case 'lassoPenalty':
       return [row(mi('P'), mo('('), mi('β'), mo(')'), mo('='), mathNode('munderover', mo('∑'), mn('j=1'), mi('p')), mo('|'), sub(mi('β'), mi('j')), mo('|'))];
     case 'elasticPenalty':
-      return [row(
-        mi('P'), mo('('), mi('β'), mo(')'), mo('='), mi('α'),
-        mathNode('munderover', mo('∑'), mn('j=1'), mi('p')), mo('|'), sub(mi('β'), mi('j')), mo('|'),
-        mo('+'), mathNode('mfrac', row(mn('1'), mo('−'), mi('α')), mn('2')),
-        mathNode('munderover', mo('∑'), mn('j=1'), mi('p')), sup(sub(mi('β'), mi('j')), mn('2')),
+      return [mathNode('mtable',
+        mathNode('mtr', mathNode('mtd', row(
+          mi('P'), mo('('), mi('β'), mo(')'), mo('='), mi('α'),
+          mathNode('munderover', mo('∑'), mn('j=1'), mi('p')), mo('|'), sub(mi('β'), mi('j')), mo('|'),
+        ))),
+        mathNode('mtr', mathNode('mtd', row(
+          mo('+'), mathNode('mfrac', row(mn('1'), mo('−'), mi('α')), mn('2')),
+          mathNode('munderover', mo('∑'), mn('j=1'), mi('p')), sup(sub(mi('β'), mi('j')), mn('2')),
+        ))),
       )];
     case 'ridgeRule':
       return [row(sub(betaHat, mi('j')), mo('='), mathNode('mfrac', sub(betaOlsHat, mi('j')), row(mn('1'), mo('+'), mn('2'), mi('λ'))))];
