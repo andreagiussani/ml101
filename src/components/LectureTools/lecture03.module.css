@@ -1,0 +1,116 @@
+.explorer { margin: 1.5rem 0 2rem; padding: clamp(1rem, 3vw, 1.4rem); background: #fff; border: 1px solid #e2e8ee; border-left: 3px solid #007f86; border-radius: 10px; }
+.eyebrow { margin: 0 0 .35rem; color: #007f86; text-transform: uppercase; letter-spacing: .09em; font-size: .72rem; font-weight: 700; }
+.explorer h3 { margin: .25rem 0 .55rem; font-size: 1.2rem; line-height: 1.4; }
+.intro { color: #526174; }
+.plotFrame { margin: 1rem 0 .5rem; padding: .35rem; background: #fbfcfd; border: 1px solid #e8edf1; border-radius: 8px; }
+.plotFrame svg { display: block; width: 100%; height: auto; max-height: 390px; }
+.plotFrame figcaption { padding: .35rem .5rem .1rem; color: #64748b; font-size: .82rem; text-align: center; }
+.grid { stroke: #e8edf1; stroke-width: 1; }
+.axis, .geometryAxis { stroke: #94a3b8; stroke-width: 1.2; }
+.tick { fill: #64748b; font: 12px 'DM Sans', sans-serif; }
+.axisLabel { fill: #35465b; font: 13px 'DM Sans', sans-serif; }
+.observation { fill: #007f86; stroke: #fff; stroke-width: 2; }
+.truthCurve { fill: none; stroke: #64748b; stroke-width: 2; stroke-dasharray: 7 6; }
+.selectedModel { fill: none; stroke: #007f86; stroke-width: 4; stroke-linecap: round; }
+.selectedFlexible { fill: none; stroke: #c47b14; stroke-width: 3.5; stroke-linecap: round; }
+.modelChoices { display: flex; flex-wrap: wrap; gap: .5rem; margin: .9rem 0; }
+.modelButton, .modelSelected { padding: .55rem .8rem; border: 1px solid #d8e1e8; border-radius: 6px; background: #fff; color: #17263a; font: inherit; cursor: pointer; }
+.modelSelected { background: #e7f3f2; border-color: #007f86; color: #005e63; font-weight: 600; }
+.modelButton:focus-visible, .modelSelected:focus-visible, .rangeRow input:focus-visible { outline: 3px solid #f4b942; outline-offset: 2px; }
+.nextQuestion { margin-top: .7rem; padding: .55rem 0; border: 0; background: transparent; color: #006f75; font: inherit; font-weight: 700; text-decoration: underline; text-underline-offset: 3px; cursor: pointer; }
+.nextQuestion:focus-visible { outline: 3px solid #f4b942; outline-offset: 3px; }
+.nextQuestionText { margin: .9rem 0 0 !important; padding-top: .85rem; border-top: 1px solid #d8e7e6; }
+.reveal { margin: 1rem 0 0; padding: .9rem 1rem; background: #edf6f5; border-radius: 6px; color: #263b4b; }
+.reveal p { margin: .4rem 0 0; }
+.legend { display: flex; flex-wrap: wrap; gap: .5rem 1rem; align-items: center; color: #526174; font-size: .84rem; }
+.legendDots { width: .65rem; height: .65rem; border-radius: 50%; background: #007f86; }
+.legendDashed { width: 1.4rem; border-top: 2px dashed #64748b; }
+.legendSolid { width: 1.4rem; border-top: 3px solid #007f86; }
+.note { margin: .8rem 0 0; padding: .8rem 1rem; border-left: 2px solid #f4b942; background: #fff9e9; color: #526174; font-size: .92rem; }
+.rangeRow { display: grid; grid-template-columns: auto minmax(100px, 1fr) 3rem; align-items: center; gap: .75rem; margin: 1rem 0 .5rem; }
+.rangeRow label { color: #17263a; font-weight: 600; }
+.rangeRow input { width: 100%; accent-color: #007f86; }
+.rangeRow output { display: grid; min-width: 2.8rem; min-height: 1.8rem; place-items: center; padding: 0 .3rem; border-radius: 5px; background: #e7f3f2; color: #005e63; font-variant-numeric: tabular-nums; }
+.equationCard { margin: 1rem 0 1.2rem; padding: .9rem clamp(.9rem, 2.5vw, 1.2rem); border: 1px solid #c8e0df; border-left: 4px solid #007f86; border-radius: 8px; background: #f3f9f8; }
+.equationCard figcaption { margin-top: .3rem; color: #526174; font-size: .86rem; }
+@media (max-width: 600px) {
+  .rangeRow { grid-template-columns: 1fr auto; gap: .35rem .7rem; }
+  .rangeRow label { grid-column: 1 / -1; }
+  .rangeRow input { grid-column: 1; }
+  .rangeRow output { grid-column: 2; grid-row: 2; }
+  .plotFrame svg { max-height: none; }
+}
+@media (prefers-reduced-motion: reduce) { .explorer *, .explorer *::before, .explorer *::after { scroll-behavior: auto !important; transition: none !important; } }
+
+/* Lecture 03: compact sample comparisons and qualitative trade-off explorer */
+.sampleGrid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: .55rem; margin: 1rem 0 .5rem; }
+.sampleTile { min-width: 0; padding: .5rem .55rem .35rem; border: 1px solid #e7edf0; border-radius: 7px; background: #fbfcfd; }
+.sampleTile > span { color: #64748b; font-size: .7rem; font-variant-numeric: tabular-nums; }
+.sampleTile svg { display: block; width: 100%; height: 3.1rem; margin-top: .1rem; }
+.sampleTruth { fill: none; stroke: #9aa7b4; stroke-width: 5; stroke-dasharray: 12 10; }
+.samplePath { fill: none; stroke: #007f86; stroke-width: 9; stroke-linecap: round; }
+.profile { padding: 1rem; border: 1px solid #e7edf0; border-radius: 8px; background: #fbfcfd; }
+.profileRow { display: grid; grid-template-columns: minmax(145px, .8fr) minmax(100px, 1.2fr); align-items: center; gap: .8rem; margin: .65rem 0; }
+.profileRow strong { display: flex; justify-content: space-between; gap: .4rem; color: #35465b; font-size: .9rem; }
+.profileRow strong span { color: #64748b; font-weight: 400; }
+.profileTrack { height: .7rem; overflow: hidden; border-radius: 99px; background: #eef2f4; }
+.profileTrack i { display: block; height: 100%; border-radius: inherit; }
+.biasFill { background: #d08c2d; }.varianceFill { background: #8c72b5; }.noiseFill { width: 34%; background: #94a3b8; }
+.profile > p { margin: .9rem 0 .5rem; color: #526174; }
+.errorBalance { display: flex; justify-content: space-between; gap: .6rem; flex-wrap: wrap; padding-top: .75rem; border-top: 1px solid #e2e8ee; color: #17263a; }
+.errorBalance span { color: #64748b; }
+.mathViewport { display: flex; justify-content: center; width: 100%; min-width: 0; overflow-x: auto; padding: .3rem 0; color: #17263a; }
+.mathViewport :global(math) { display: block; min-width: max-content; font-size: clamp(1rem, 2.4vw, 1.3rem); line-height: 1.55; }
+.equationCard { margin: 1rem 0 1.2rem; padding: .9rem clamp(.9rem, 2.5vw, 1.2rem); border: 1px solid #c8e0df; border-left: 4px solid #007f86; border-radius: 8px; background: #f3f9f8; }
+.equationCard .eyebrow { margin-bottom: .25rem; }
+.equationCard figcaption { margin-top: .3rem; color: #526174; font-size: .86rem; }
+.penaltyGrid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: .7rem; margin: 1.1rem 0; }
+.penaltyCard { min-width: 0; padding: .85rem; border: 1px solid #e2e8ee; border-radius: 8px; background: #fff; }
+.penaltyCard h3 { margin: .1rem 0 .4rem; font-size: 1rem; }
+.penaltyCard p { margin: .45rem 0 .1rem; color: #526174; font-size: .88rem; line-height: 1.5; }
+.penaltyCard .mathViewport :global(math) { font-size: clamp(.9rem, 1.6vw, 1.05rem); }
+.geometryChoice { display: flex; flex-wrap: wrap; gap: .5rem; margin: .9rem 0; }
+.geometryStage { display: grid; grid-template-columns: minmax(230px, .9fr) minmax(220px, 1.1fr); align-items: center; gap: .75rem 1rem; padding: .8rem; border-radius: 8px; background: #fbfcfd; }
+.geometryStage svg { display: block; width: 100%; max-height: 205px; }
+.geometryStage > p { margin: 0; color: #526174; line-height: 1.65; }
+.geometryStage > p strong { display: block; margin-bottom: .25rem; color: #17263a; }
+.geometryAxis { stroke: #adb8c2; stroke-width: 1; }
+.geometryContour { fill: none; stroke: #cbd5df; stroke-width: 1.3; stroke-dasharray: 4 4; }
+.geometrySelectedContour { fill: none; stroke: #d08c2d; stroke-width: 2; stroke-dasharray: 5 4; }
+.geometryCircle { fill: rgb(0 127 134 / 9%); stroke: #007f86; stroke-width: 2.5; }
+.geometryDiamond { fill: rgb(0 127 134 / 9%); stroke: #007f86; stroke-width: 2.5; }
+.geometryOls { fill: #17263a; stroke: #fff; stroke-width: 2; }.geometryEstimate { fill: #f4b942; stroke: #17263a; stroke-width: 1.3; }
+.geometryText { fill: #35465b; font: 11px 'DM Sans', sans-serif; font-weight: 700; }
+.coefficientCompare { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: .8rem; margin: 1rem 0 .5rem; }
+.coefficientCard { min-width: 0; padding: .9rem; border: 1px solid #dce6e9; border-radius: 8px; background: #fbfcfd; }
+.coefficientCard > div:first-child { display: flex; justify-content: space-between; align-items: baseline; gap: .4rem; }
+.coefficientCard h4 { margin: 0; color: #007f86; font-size: 1rem; }
+.coefficientCard strong { color: #17263a; font-size: 1.35rem; font-variant-numeric: tabular-nums; }
+.coefficientCard p { min-height: 2.8em; margin: .45rem 0 .8rem; color: #526174; font-size: .88rem; }
+.coefficientTrack { position: relative; height: .8rem; overflow: hidden; border-radius: 99px; background: linear-gradient(to right, transparent calc(50% - 1px), #94a3b8 calc(50% - 1px), #94a3b8 calc(50% + 1px), transparent calc(50% + 1px)), #eef2f4; }
+.coefficientTrack i { position: absolute; top: .2rem; left: 50%; height: .4rem; border-radius: 99px; background: #007f86; }
+.coefficientTrack .negativeCoefficient { transform: translateX(-100%); background: #c47b14; }
+.zeroedCard { border-color: #eacb8c; background: #fffaf0; }
+.zeroedCard h4 { color: #a86b10; }
+.assumption { margin: .75rem 0; color: #64748b; font-size: .84rem; }
+.ruleRows { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: .7rem; }
+.ruleRows > div { min-width: 0; padding: .6rem .8rem; border: 1px solid #e7edf0; border-radius: 7px; }
+.ruleRows b { color: #007f86; font-size: .82rem; }
+.ruleRows .mathViewport { justify-content: flex-start; }
+.ruleRows .mathViewport :global(math) { font-size: 1rem; }
+@media (max-width: 720px) {
+  .sampleGrid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .penaltyGrid { grid-template-columns: 1fr; }
+  .penaltyCard { display: grid; grid-template-columns: minmax(95px, .45fr) minmax(0, 1fr); align-items: center; gap: .3rem .7rem; }
+  .penaltyCard h3 { grid-row: 1 / span 2; }
+  .penaltyCard p { grid-column: 1 / -1; }
+  .geometryStage { grid-template-columns: 1fr; }
+  .geometryStage svg { max-height: 225px; }
+}
+@media (max-width: 500px) {
+  .profileRow { grid-template-columns: 1fr; gap: .25rem; }
+  .profileRow strong { max-width: none; }
+  .coefficientCompare, .ruleRows { grid-template-columns: 1fr; }
+  .coefficientCard p { min-height: 0; }
+  .mathViewport :global(math) { font-size: .98rem; }
+}

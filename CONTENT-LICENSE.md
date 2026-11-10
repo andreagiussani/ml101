@@ -2,7 +2,7 @@
 
 Copyright © 2026 Andrea Giussani.
 
-Unless otherwise noted, the original educational text and student-facing explanations created for Lectures 01 and 02 in this repository are licensed under the **Creative Commons Attribution 4.0 International License (CC BY 4.0)**.
+Unless otherwise noted, the original educational text and student-facing explanations created for Lectures 01–03 in this repository are licensed under the **Creative Commons Attribution 4.0 International License (CC BY 4.0)**.
 
 You may share and adapt this material, including for commercial purposes, provided you give appropriate attribution, link to the license, and indicate whether changes were made. Read the [CC BY 4.0 license](https://creativecommons.org/licenses/by/4.0/) for the full terms.
 
