@@ -129,8 +129,9 @@ export function SampleSensitivityExplorer() {
         </svg>
       </div>)}
     </div>
+    <div className={styles.legend} aria-label="Plot legend"><span className={styles.legendDashed} aria-hidden="true" /> Fixed population relationship <span className={styles.legendSolid} aria-hidden="true" /> Fitted model for each sample</div>
     <p className={styles.reveal} aria-live="polite">{degree === 'moderate' ? <><strong>Relatively stable.</strong> The fits vary, but stay near one another and the shared signal.</> : <><strong>Sample-sensitive.</strong> The degree-12 curves wander apart even though the underlying population is unchanged.</>}</p>
-    <p className={styles.note}>Eight samples · n = 20 per sample · simulated illustration. Each mini-plot uses the same scale.</p>
+    <p className={styles.note}>The dotted curve is the fixed underlying relationship used to generate these simulated samples; we know it here because we made the simulation. In real data, that population curve is unknown. Eight samples · n = 20 per sample · same scale.</p>
   </section>;
 }
 

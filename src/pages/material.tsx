@@ -23,6 +23,10 @@ export default function Material(): React.ReactElement {
         <span className={styles.copy}><strong>Can we trust a perfect fit?</strong><small>The price of fitting the data.</small></span>
         <span className={styles.arrow} aria-hidden="true">↗</span>
       </Link>
+      <Link className={styles.card} to="/lectures/ml101-04">
+        <span className={styles.copy}><strong>Trust, but verify</strong><small>Cross-validation, model selection, and the score you should trust.</small></span>
+        <span className={styles.arrow} aria-hidden="true">↗</span>
+      </Link>
     </main>
   </Layout>;
 }

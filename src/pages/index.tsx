@@ -12,7 +12,7 @@ export default function Home(): React.ReactElement {
         <div className={styles.kicker}><span className={styles.kickerMark} /> A course in machine learning</div>
         <h1>ML101 — Introduction to<br className={styles.desktopBreak} /> Machine Learning</h1>
         <p className={styles.question}>How do we turn imperfect data into reliable predictions?</p>
-        <p className={styles.intro}>An interactive textbook for undergraduate students. Explore how machine learning learns from examples, handles incomplete information, and balances fit with reliable predictions.</p>
+        <p className={styles.intro}>An interactive textbook for undergraduate students. Explore how machine learning learns from examples, handles incomplete information, controls complexity, and earns a trustworthy score.</p>
         <div className={styles.lectureGrid} aria-label="Course material">
           <Link className={styles.lectureCard} to="/lectures/ml101-01">
             <span className={styles.lectureTitle}>What is Machine Learning?</span>
@@ -27,6 +27,11 @@ export default function Home(): React.ReactElement {
           <Link className={styles.lectureCard} to="/lectures/ml101-03">
             <span className={styles.lectureTitle}>Can we trust a perfect fit?</span>
             <span className={styles.lectureSubtitle}>The price of fitting the data.</span>
+            <span className={styles.arrow} aria-hidden="true">↗</span>
+          </Link>
+          <Link className={styles.lectureCard} to="/lectures/ml101-04">
+            <span className={styles.lectureTitle}>Trust, but verify</span>
+            <span className={styles.lectureSubtitle}>Cross-validation, model selection, and the score you should trust.</span>
             <span className={styles.arrow} aria-hidden="true">↗</span>
           </Link>
         </div>

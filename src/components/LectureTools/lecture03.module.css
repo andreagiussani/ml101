@@ -24,8 +24,8 @@
 .reveal p { margin: .4rem 0 0; }
 .legend { display: flex; flex-wrap: wrap; gap: .5rem 1rem; align-items: center; color: #526174; font-size: .84rem; }
 .legendDots { width: .65rem; height: .65rem; border-radius: 50%; background: #007f86; }
-.legendDashed { width: 1.4rem; border-top: 2px dashed #64748b; }
-.legendSolid { width: 1.4rem; border-top: 3px solid #007f86; }
+.legendDashed { display: inline-block; flex: 0 0 1.4rem; border-top: 2px dashed #64748b; vertical-align: middle; }
+.legendSolid { display: inline-block; flex: 0 0 1.4rem; border-top: 3px solid #007f86; vertical-align: middle; }
 .pathLegend { display: inline-block; width: 1.1rem; height: .2rem; margin-right: .4rem; vertical-align: middle; }
 .note { margin: .8rem 0 0; padding: .8rem 1rem; border-left: 2px solid #f4b942; background: #fff9e9; color: #526174; font-size: .92rem; }
 .rangeRow { display: grid; grid-template-columns: auto minmax(100px, 1fr) 3rem; align-items: center; gap: .75rem; margin: 1rem 0 .5rem; }

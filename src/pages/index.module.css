@@ -4,12 +4,11 @@
 .main h1 { margin: 1.25rem 0 1rem; font-family: 'Newsreader', Georgia, serif; font-weight: 500; font-size: clamp(2.35rem, 5.2vw, 4rem); line-height: 1.08; letter-spacing: -.025em; }
 .question { margin: 1.5rem 0 .8rem; font-family: 'Newsreader', Georgia, serif; font-size: clamp(1.35rem, 3vw, 1.8rem); color: #007f86; }
 .intro { max-width: 640px; color: #526174; font-size: 1.05rem; line-height: 1.8; }
-.lectureGrid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 1rem; max-width: 850px; margin-top: 2.4rem; }
+.lectureGrid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1rem; max-width: 850px; margin-top: 2.4rem; }
 .lectureCard { position: relative; display: flex; flex-direction: column; gap: .45rem; min-height: 150px; padding: 1.35rem 3.5rem 1.35rem 1.4rem; border: 1px solid #d9e3e8; border-left: 4px solid #007f86; border-radius: 8px; color: #17263a; text-decoration: none; background: #fff; transition: border-color .15s ease, transform .15s ease; }
 .lectureCard:hover { color: #17263a; text-decoration: none; border-color: #007f86; transform: translateY(-2px); }
 .lectureTitle { font-family: 'Newsreader', Georgia, serif; font-size: 1.6rem; }
 .lectureSubtitle { color: #64748b; }
 .arrow { position: absolute; top: 1.4rem; right: 1.5rem; color: #007f86; font-size: 1.4rem; }
-@media (max-width: 850px) { .lectureGrid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
 @media (max-width: 600px) { .lectureGrid { grid-template-columns: 1fr; } .lectureCard { min-height: 0; } }
 @media (max-width: 500px) { .main { width: min(100% - 2rem, 900px); } .desktopBreak { display: none; } }
