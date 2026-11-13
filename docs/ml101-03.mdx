@@ -7,7 +7,7 @@ slug: /ml101-03
 ---
 
 import { DiscussionQuestion } from '@site/src/components/LectureTools';
-import { ModelFitExplorer, SampleSensitivityExplorer, BiasVarianceExplorer, FormulaCallout, PenaltySummary, PenaltyGeometryExplorer, ShrinkageExplorer } from '@site/src/components/LectureTools/Lecture03';
+import { ModelFitExplorer, SampleSensitivityExplorer, BiasVarianceExplorer, FormulaCallout, PenaltySummary, PenaltyGeometryExplorer, ShrinkageExplorer, SelectionPathExplorer } from '@site/src/components/LectureTools/Lecture03';
 
 # Can we trust a perfect fit?
 
@@ -94,6 +94,10 @@ Suppose age and professional experience are correlated, and LASSO keeps experien
 
 Prediction, statistical interpretation, and causal explanation are different goals. A zero LASSO coefficient says that this fitted linear prediction does not directly use that feature. It does not establish the absence of a causal effect.
 
+<SelectionPathExplorer />
+
+In this illustrative coefficient path, changing λ changes which predictors remain in the fitted model. The plot shows how a correlated predictor can reach zero while another carries overlapping predictive information. The paths are a teaching example, not estimates from a real dataset; a zero coefficient still does not measure a feature’s overall or causal importance.
+
 Regularization is not a cure-all. Too much penalty can discard useful signal; Ridge does not repair a misspecified relationship; and Elastic Net does not guarantee recovery of the “correct” variables. Whether a penalty improves prediction has to be evaluated on data not used for fitting.
 
 ## 7. What to carry forward
@@ -106,7 +110,7 @@ Regularization is not a cure-all. Too much penalty can discard useful signal; Ri
 
 **A little bias may buy a lot of stability.** But how much penalty is appropriate, and how reliable is an error estimate from one particular split? Those are questions for evaluating models across samples.
 
-<DiscussionQuestion>How would you tell whether a model has learned a relationship—or only a coincidence in its training sample?</DiscussionQuestion>
+<DiscussionQuestion>How would you tell whether a model has learned a relationship - or only a coincidence in its training sample?</DiscussionQuestion>
 
 ## References
 

@@ -324,3 +324,45 @@ export function ShrinkageExplorer() {
     <div className={styles.ruleRows}><div><b>Ridge</b><MathDisplay formula="ridgeRule" /></div><div><b>LASSO</b><MathDisplay formula="lassoRule" /></div></div>
   </section>;
 }
+
+/** An illustrative coefficient path for showing how LASSO selection changes with λ. */
+export function SelectionPathExplorer() {
+  const [lambda, setLambda] = useState(0.25);
+  const paths = [
+    { name: 'Experience', color: '#007f86', value: (l: number) => Math.max(0, 0.9 - 0.38 * l) },
+    { name: 'Age', color: '#c47b14', value: (l: number) => Math.max(0, 0.66 - 1.9 * l) },
+    { name: 'Education', color: '#8064a2', value: (l: number) => Math.max(0, 0.4 - 0.5 * l) },
+  ];
+  const left = 66; const top = 22; const width = 510; const height = 205;
+  const x = (l: number) => left + l * width;
+  const y = (value: number) => top + (1 - value) * height;
+  const selected = paths.filter((path) => path.value(lambda) > 0.005);
+  return (
+    <section className={styles.explorer} aria-labelledby="selection-path-title">
+      <p className={styles.eyebrow}>Interactive coefficient paths</p>
+      <h3 id="selection-path-title">Which predictors survive the penalty?</h3>
+      <p className={styles.intro}>Move λ to follow an illustrative LASSO fit. A coefficient at zero is excluded from this fitted model.</p>
+      <figure className={styles.plotFrame}>
+        <svg viewBox="0 0 620 275" role="img" aria-labelledby="selection-path-graph-title selection-path-graph-desc">
+          <title id="selection-path-graph-title">Illustrative LASSO coefficient paths as the penalty changes</title>
+          <desc id="selection-path-graph-desc">Experience, age, and education coefficients shrink as lambda increases. Age reaches zero first, showing that selection depends on the penalty.</desc>
+          {[0, 0.25, 0.5, 0.75, 1].map((tick) => <g key={tick}><line className={styles.grid} x1={left} x2={left + width} y1={y(tick)} y2={y(tick)} /><text className={styles.tick} x={left - 12} y={y(tick) + 4} textAnchor="end">{tick.toFixed(2)}</text></g>)}
+          {[0, 0.25, 0.5, 0.75, 1].map((tick) => <g key={tick}><line className={styles.grid} x1={x(tick)} x2={x(tick)} y1={top} y2={top + height} /><text className={styles.tick} x={x(tick)} y={top + height + 19} textAnchor="middle">{tick.toFixed(2)}</text></g>)}
+          <line className={styles.axis} x1={left} x2={left + width} y1={top + height} y2={top + height} />
+          <line className={styles.axis} x1={left} x2={left} y1={top} y2={top + height} />
+          <text className={styles.axisLabel} x={left + width / 2} y="270" textAnchor="middle">Penalty strength λ</text>
+          <text className={styles.axisLabel} transform={`translate(17 ${top + height / 2}) rotate(-90)`} textAnchor="middle">Coefficient</text>
+          {paths.map((path) => <g key={path.name}>
+            <path d={Array.from({ length: 51 }, (_, i) => `${i ? 'L' : 'M'}${x(i / 50)},${y(path.value(i / 50))}`).join(' ')} fill="none" stroke={path.color} strokeWidth="3" />
+            <circle cx={x(lambda)} cy={y(path.value(lambda))} r="5" fill={path.color} stroke="white" strokeWidth="2" />
+          </g>)}
+          <line x1={x(lambda)} x2={x(lambda)} y1={top} y2={top + height} stroke="#17263a" strokeDasharray="4 4" strokeWidth="1.5" />
+        </svg>
+        <figcaption>Illustrative coefficient paths; values are not estimated from real data.</figcaption>
+      </figure>
+      <div className={styles.legend}>{paths.map((path) => <span key={path.name}><i className={styles.pathLegend} style={{ backgroundColor: path.color }} />{path.name}</span>)}</div>
+      <div className={styles.rangeRow}><label htmlFor="selection-lambda">Penalty λ</label><input id="selection-lambda" type="range" min="0" max="1" step="0.01" value={lambda} onChange={(event) => setLambda(Number(event.target.value))} /><output htmlFor="selection-lambda">{lambda.toFixed(2)}</output></div>
+      <p aria-live="polite"><strong>Selected at λ = {lambda.toFixed(2)}:</strong> {selected.length ? selected.map((path) => path.name).join(', ') : 'none'}. {selected.length < paths.length ? 'A zero here reflects this fitted model and penalty; it does not prove a predictor is unimportant.' : 'Lowering the penalty can bring more predictors into the fitted model.'}</p>
+    </section>
+  );
+}
