@@ -113,6 +113,15 @@
 .validationLegend { margin-left: .5rem; background: #f7e6b9; box-shadow: inset 0 0 0 1px #dfb858; }
 .winnerNote { padding: 1.2rem 1.3rem; border-left: 3px solid #cf6a48; background: #fff5f0; }
 .winnerNote strong { color: #a84529; }
+.leakageGrid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: .8rem; margin: 1.4rem 0; }
+.leakageCard { padding: 1.1rem; border: 1px solid #dce5e5; border-radius: 8px; background: #fff; }
+.leakageCard > span { color: #007f86; font-size: .62rem; font-weight: 800; letter-spacing: .08em; }
+.leakageCard h3 { margin: .55rem 0; font-family: 'Newsreader', Georgia, serif; font-size: 1.45rem; }
+.leakageCard p { color: #526174; font-size: .86rem; }
+.leakageCard p:last-child { margin-bottom: 0; }
+.leakageCard strong { color: #17263a; }
+.leakageRule { margin: 1.4rem 0 2rem; padding: 1.1rem 1.25rem; border-left: 3px solid #007f86; background: #eaf5f3; color: #35465b; }
+.leakageRule strong { color: #005e63; }
 .finalExam { display: grid; grid-template-columns: 1fr .8fr; align-items: center; gap: 2rem; margin: 2.5rem 0; padding: clamp(1.2rem, 3vw, 2rem); border-radius: 12px; background: #101b2c; color: #f4f0e8; }
 .finalExam h3 { color: #f4f0e8; }
 .finalCopy > p:not(.eyebrow) { color: #c5ced8; }
@@ -124,7 +133,7 @@
 .openButton:hover { background: #e3b65b; color: #101b2c; }
 .finalScore { color: #f0cf82; font-family: 'Newsreader', Georgia, serif; font-size: 4rem; font-weight: 500; }
 .envelopeOpen { border-color: #9cb9b0; background: #182d33; }
-.takeaways { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: .7rem; margin: 1.4rem 0 2rem; padding: 0; list-style: none; }
+.takeaways { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: .7rem; margin: 1.4rem 0 2rem; padding: 0; list-style: none; }
 .takeaways li { padding: 1rem; border-top: 2px solid #007f86; background: #fff; color: #526174; font-size: .88rem; }
 .takeaways strong { display: block; margin-bottom: .35rem; color: #17263a; }
 @media (max-width: 700px) {
@@ -138,6 +147,7 @@
   .stageArrow { transform: rotate(90deg); text-align: center; }
   .riskCard, .finalExam { grid-template-columns: 1fr; }
   .finalExam { gap: 1rem; }
+  .leakageGrid { grid-template-columns: 1fr; }
 }
 @media (max-width: 480px) {
   .hero { margin-right: -.35rem; margin-left: -.35rem; border-radius: 10px; }
