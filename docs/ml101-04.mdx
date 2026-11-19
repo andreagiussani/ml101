@@ -1,0 +1,109 @@
+---
+id: ml101-04
+title: 'Trust, but verify'
+description: 'Cross-validation, model selection, and the score you should trust.'
+sidebar_position: 4
+slug: /ml101-04
+---
+
+import { DiscussionQuestion } from '@site/src/components/LectureTools';
+import { Lecture04Hero, SingleSplitChart, CrossValidationLab, CrossValidationFormula, FinalExamReveal } from '@site/src/components/LectureTools/Lecture04';
+import styles from '@site/src/components/LectureTools/lecture04.module.css';
+
+<Lecture04Hero />
+
+**A model can pass an exam it has already seen.** Training error tells us how closely a model fits the observations used to learn its parameters. It does not tell us how well that fitted model will predict a new observation.
+
+<h2 id="the-exam">The exam we actually care about</h2>
+
+Imagine the model is already fitted. Its **generalization risk** is its expected loss on a new observation from the population we care about. The future is unavailable, so we estimate performance using observations held out from fitting.
+
+<div className={styles.riskCard}>
+  <div className={styles.riskPane}><span>THE PRACTICE PAPER</span><strong>Training loss</strong><p>Measured on examples that helped shape the fitted model. Useful for checking fit; not a final performance estimate.</p></div>
+  <div className={`${styles.riskPane} ${styles.riskFuture}`}><span>THE REAL QUESTION</span><strong>Future loss</strong><p>Measured on new examples from the population and setting where we intend to use the prediction.</p></div>
+</div>
+
+The target population and prediction moment matter. A score only answers the question represented by its evaluation data and loss measure.
+
+## One split, one roll of the dice
+
+Split development data into a training part and a validation part. Fit on the first; score on the second. But which observations landed on each side? Change the random assignment and the score can change too.
+
+<SingleSplitChart />
+
+The scores are invented to show the idea: one random split gives one noisy view, and another assignment can give a different score. The final test set sits outside these development splits and stays untouched during model choice.
+
+<aside className={styles.splitCaution}><strong>One split can fool you.</strong> A validation score may be higher or lower depending on which observations land in each set; one split alone is not automatically biased in either direction. But if we try many splits and keep the one with the lowest score, that selected score becomes optimistic. Cross-validation gives a steadier comparison, while the separate test set remains for the final assessment.</aside>
+
+## Give every observation a turn
+
+In **K-fold cross-validation**, divide development data into K folds. Fit K fresh models: each time, hold out one fold for validation and train on the other K − 1. Each observation gets one turn in a validation fold.
+
+<div className={styles.cvChartWrap}>
+  <table className={styles.cvChart}>
+    <caption>Five-fold cross-validation: each row is one round; the gold fold is held out for validation.</caption>
+    <thead><tr><th scope="col">Round</th>{[1, 2, 3, 4, 5].map((fold) => <th scope="col" key={fold}>Fold {fold}</th>)}</tr></thead>
+    <tbody>{[0, 1, 2, 3, 4].map((held) => <tr key={held}><th scope="row">Round {held + 1}</th>{[0, 1, 2, 3, 4].map((fold) => <td key={fold} className={fold === held ? styles.validationCell : styles.trainingCell}>{fold === held ? 'Validate' : 'Train'}</td>)}</tr>)}</tbody>
+  </table>
+</div>
+<p className={styles.foldCaption}><span className={styles.trainLegend} /> Training &nbsp; <span className={styles.validationLegend} /> Validation</p>
+
+The cross-validation score pools the validation losses across folds. It is an **estimate**, not a guarantee: the folds come from a finite sample, and each model trains on only a fraction of the development data. Five folds are a practical default, not a universal winner. Ten folds give each fit more training data and require more fits. Leave-one-out requires *n* fits and can have high variability.
+
+For candidate hyperparameter λ, compute the average loss over all held-out observations:
+
+<CrossValidationFormula />
+
+The observation-weighted form also works when folds differ in size. In that case, simply averaging the K fold averages would give small and large folds equal weight.
+
+## Now let every candidate take the same exam
+
+Last lecture introduced λ as a control for LASSO’s penalty. It is a **hyperparameter**: a setting chosen before fitting, rather than a coefficient learned as part of the fit. We can score candidate values using the same cross-validation folds, then select the one with the lowest mean validation loss.
+
+Tap a candidate below, then tap a fold. The invented scores change by fold; the best average gives us a rule for choosing λ from the development data.
+
+<CrossValidationLab />
+
+The winning λ is not automatically a final performance estimate. We searched across candidates and chose the smallest observed mean. When estimates are noisy, the selected minimum tends to look better than the underlying performance. A larger search can make this **winner’s curse** more consequential.
+
+<aside className={styles.winnerNote}><strong>Winning a comparison and estimating performance are separate jobs.</strong> Cross-validation can select a hyperparameter. The same winning score can be optimistic as a report of how the selected procedure will perform on new data.</aside>
+
+## Three jobs. Keep their roles clear.
+
+<div className={styles.stageLine}>
+  <div className={styles.stage}><span>01 · LEARN</span><h3>Training folds</h3><p>Estimate model parameters.</p></div><b className={styles.stageArrow} aria-hidden="true">→</b>
+  <div className={styles.stage}><span>02 · CHOOSE</span><h3>Validation folds</h3><p>Compare models and select λ.</p></div><b className={styles.stageArrow} aria-hidden="true">→</b>
+  <div className={styles.stage}><span>03 · JUDGE</span><h3>Untouched test</h3><p>Assess the final selected model.</p></div>
+</div>
+
+Once λ is chosen, refit the selected model on all development data. Then evaluate it once on a test set that played no part in model or hyperparameter choices. If data are scarce or many alternatives are compared, **nested cross-validation** can evaluate the whole selection procedure: inner folds choose the model, outer folds estimate its performance.
+
+<FinalExamReveal />
+
+If a disappointing test result sends us back to adjust the model, the test result has started influencing choices. A clean evaluation needs a clear boundary between choosing and judging.
+
+## Before you trust the number
+
+<ul className={styles.takeaways}>
+  <li><strong>Name the target.</strong> What population, prediction moment, and loss matter?</li>
+  <li><strong>Choose with development data.</strong> Keep candidate comparisons on the same folds.</li>
+  <li><strong>Judge once.</strong> Refit the choice, then report an untouched test result.</li>
+</ul>
+
+**A reliable score is earned by the experiment around it.** The test is a verdict on the full procedure: the data, the split, the choices, and the model.
+
+<DiscussionQuestion>If five-fold cross-validation selects λ = 0.1, can we report that same cross-validation score as the final performance? What would the test set add?</DiscussionQuestion>
+
+## Further reading
+
+#### Stone (1974)
+
+[“Cross-Validatory Choice and Assessment of Statistical Predictions.”](https://doi.org/10.1111/j.2517-6161.1974.tb00994.x) *Journal of the Royal Statistical Society: Series B*, 36(2), 111–133.
+
+#### Kohavi (1995)
+
+[“A Study of Cross-Validation and Bootstrap for Accuracy Estimation and Model Selection.”](https://ijcai.org/proceedings/1995/0147.pdf) *Proceedings of IJCAI*, 1137–1145.
+
+#### Cawley & Talbot (2010)
+
+[“On Over-fitting in Model Selection and Subsequent Selection Bias in Performance Evaluation.”](https://www.jmlr.org/papers/v11/cawley10a.html) *Journal of Machine Learning Research*, 11, 2079–2107.
