@@ -27,6 +27,10 @@ export default function Material(): React.ReactElement {
         <span className={styles.copy}><strong>Trust, but verify</strong><small>Cross-validation, model selection, and the score you should trust.</small></span>
         <span className={styles.arrow} aria-hidden="true">↗</span>
       </Link>
+      <Link className={styles.card} to="/lectures/ml101-05">
+        <span className={styles.copy}><strong>Data leakage: follow the information</strong><small>Find the hidden paths that make an experiment look better than it is.</small></span>
+        <span className={styles.arrow} aria-hidden="true">↗</span>
+      </Link>
     </main>
   </Layout>;
 }

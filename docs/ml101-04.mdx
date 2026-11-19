@@ -80,49 +80,21 @@ Once λ is chosen, refit the selected model on all development data. Then evalua
 
 <FinalExamReveal />
 
-If a disappointing test result sends us back to adjust the model, the test result has started influencing choices. A clean evaluation needs a clear boundary between choosing and judging. The same boundary applies throughout the workflow: information must only flow from data that would be available at the stage where we use it.
-
-## Leakage: when information crosses the boundary
-
-**Data leakage** occurs when model building or evaluation uses information that would not legitimately be available at the intended prediction time or stage. The model does not have to see validation labels to benefit from a flawed experiment. Cross-validation protects held-out rows from fitting; it cannot fix a feature from the future, a split that puts the same entity on both sides, or preprocessing learned from all the data.
-
-<div className={styles.leakageGrid}>
-  <article className={styles.leakageCard}>
-    <span>01 · LEARNED BEFORE THE SPLIT</span>
-    <h3>Preprocessing sees validation</h3>
-    <p>If we standardize using the full dataset mean and standard deviation before splitting, validation features have already shaped the transformation. The same mistake can happen with imputation, feature selection, or PCA.</p>
-    <p><strong>Keep the order:</strong> split first; fit each transformation on the training fold; apply it to that fold’s validation data. A pipeline keeps these steps together.</p>
-  </article>
-  <article className={styles.leakageCard}>
-    <span>02 · UNAVAILABLE AT PREDICTION TIME</span>
-    <h3>A feature from the future</h3>
-    <p>Suppose we predict loan default at application time, but include collection calls made after default. The feature may make cross-validation look excellent because it records what happened after the event we meant to predict.</p>
-    <p><strong>Ask:</strong> Would this value exist when the prediction is actually made?</p>
-  </article>
-  <article className={styles.leakageCard}>
-    <span>03 · THE WRONG UNIT OR TIME</span>
-    <h3>Rows are not always independent</h3>
-    <p>A random row split can put one customer’s transactions in both training and validation. If the goal is to predict for new customers, split by customer. For forecasting, train on earlier dates and validate on later ones.</p>
-    <p><strong>Match the split</strong> to deployment: who or what is new, and when is the prediction made?</p>
-  </article>
-</div>
-
-<aside className={styles.leakageRule}><strong>The rule is about information flow.</strong> In each validation round, learn the imputer, scaler, feature selection, and model from that round’s training fold alone. Then apply the fitted pipeline to its held-out fold. Keep the final test set out of every choice.</aside>
-
-<DiscussionQuestion>Can validation information leak into a model even when validation labels are never used? How?</DiscussionQuestion>
+If a disappointing test result sends us back to adjust the model, the test result has started influencing choices. A clean evaluation needs a clear boundary between choosing and judging. In the next lesson, we’ll follow information through the whole experiment and find the quieter ways that boundary can break.
 
 ## Before you trust the number
 
 <ul className={styles.takeaways}>
   <li><strong>Name the target.</strong> What population, prediction moment, and loss matter?</li>
   <li><strong>Choose with development data.</strong> Keep candidate comparisons on the same folds.</li>
-  <li><strong>Keep learning inside each fold.</strong> Fit preprocessing only on that fold’s training data, and split by the right entity or time.</li>
   <li><strong>Judge once.</strong> Refit the choice, then report an untouched test result.</li>
 </ul>
 
 **A reliable score is earned by the experiment around it.** The test is a verdict on the full procedure: the data, the split, the choices, and the model.
 
 <DiscussionQuestion>If five-fold cross-validation selects λ = 0.1, can we report that same cross-validation score as the final performance? What would the test set add?</DiscussionQuestion>
+
+<p className={styles.nextLesson}><span>UP NEXT · LECTURE 05</span><a href="/lectures/ml101-05">Data leakage: follow the information →</a></p>
 
 ## Further reading
 

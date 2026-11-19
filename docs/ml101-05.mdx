@@ -1,0 +1,105 @@
+---
+id: ml101-05
+title: 'Data leakage: follow the information'
+description: 'Find the hidden paths that can make a machine-learning experiment look better than it is.'
+sidebar_position: 5
+slug: /ml101-05
+---
+
+import { DiscussionQuestion } from '@site/src/components/LectureTools';
+import { LeakageDetective, LeakagePipeline, PredictionMomentCheck } from '@site/src/components/LectureTools/Lecture05';
+import styles from '@site/src/components/LectureTools/lecture05.module.css';
+
+<header className={styles.hero}>
+  <div className={styles.heroCopy}>
+    <p className={styles.kicker}>ML101 · FIELD NOTES 05</p>
+    <h1>Data<br />leakage.</h1>
+    <p className={styles.deck}>A model reports 99% accuracy. Before we celebrate, let’s trace where every bit of information came from.</p>
+    <a className={styles.heroLink} href="#follow-the-information">Open the case files <span aria-hidden="true">↓</span></a>
+  </div>
+  <div className={styles.xray} role="img" aria-label="A red information path crosses from held-out data into model decisions">
+    <div className={styles.node}><span>HELD-OUT DATA</span><strong>Supposed to stay unseen</strong></div>
+    <b className={styles.crossArrow} aria-hidden="true">↗</b>
+    <span className={styles.arrow} aria-hidden="true">↓</span>
+    <div className={`${styles.node} ${styles.nodeLeak}`}><span>THE HIDDEN PATH</span><strong>Information crosses over</strong></div>
+    <span className={styles.arrow} aria-hidden="true">↓</span>
+    <div className={styles.node}><span>THE REPORTED SCORE</span><strong>Too good to trust</strong></div>
+  </div>
+  <span className={styles.heroIndex}>05 / 07</span>
+</header>
+
+<p className={styles.lead}><strong>Leakage is an information-flow problem.</strong> It happens when model building or evaluation uses information that would not legitimately be available for the prediction or decision we claim to test. The code can run perfectly. The score can look spectacular. The experiment can still be answering the wrong question.</p>
+
+## A test can be cleanly split and still be contaminated
+
+Imagine a credit-risk model gets 99% accuracy in cross-validation. The rows are separated correctly. Then we notice a feature counting collection calls made **after** a customer defaulted. That feature predicts default because it records what happened after the event.
+
+Cross-validation did its job: it held out rows from fitting. But no split can make a future event available at application time. A strong evaluation needs both a sound split and legitimate information.
+
+<div className={styles.questionCard}><strong>Start with the prediction moment.</strong> What are we predicting, for whom, and at what exact time? Every feature and every split must make sense relative to that moment.</div>
+
+## Follow the information
+
+There are several routes for information to slip across the boundary. Choose a case, inspect the workflow, and see where it went wrong.
+
+<LeakageDetective />
+
+## A transformation is a learned step
+
+Scaling, imputing, selecting features, and fitting PCA can feel like setup. But each operation estimates something from data. If it sees a validation fold, then validation information has already shaped the model-building procedure, even when validation labels remain hidden.
+
+The safe pattern repeats inside **every** validation round:
+
+<LeakagePipeline />
+
+The pipeline is part of the learning algorithm. Fit each step on training data only, then apply those fitted steps in order to the held-out data. For example, fit MissForest inside the training fold; do not impute the full table once before cross-validation.
+
+## What time is this feature from?
+
+A column name rarely tells us whether a feature is legitimate. “Account status” might be captured at application, or updated weeks after default. A payment field might include a later correction. A join might quietly bring in an outcome-derived table.
+
+<PredictionMomentCheck />
+
+For every feature, trace its source and timestamp. Ask when it was created, when it became available, whether it can be revised later, and whether it is a consequence of the target. If the model is used at loan application, collection activity after default cannot be a predictor, no matter how predictive it is historically.
+
+## Split the unit you need to generalize to
+
+If rows represent repeated measurements, random row-level splitting can put the same customer, patient, school, or device in both training and validation. A model can then benefit from patterns specific to entities it has effectively seen before.
+
+When the goal is to generalize to **new customers**, keep all rows from one customer together with a grouped split. When the goal is to predict **later outcomes for existing customers**, their past history may be valid information; use a time-ordered split that only lets the model learn from the past. The right protocol imitates deployment.
+
+For forecasting, randomly shuffling time can let December help predict October. Use forward-chaining or rolling-origin validation: train on an earlier window, validate on a later one, then move the cutoff forward. A gap can help when outcome windows overlap, nearby records share information, or inputs arrive with a delay.
+
+## The test set can leak through our decisions
+
+We do not have to fit coefficients on test rows to use them. If a test score disappoints, we change a feature or λ, rerun the evaluation, and keep going until the test score improves, the test has guided model selection. It is now part of the development process, and the best observed result will tend to be optimistic.
+
+Use development data for iteration and validation for choices. Keep the test set for a final evaluation of the selected procedure. If the test has already influenced decisions, treat it as used; collect a fresh test set or evaluate the entire selection process with nested cross-validation.
+
+<aside className={styles.questionCard}><strong>Three different questions:</strong> Did training see held-out examples? Did features contain information unavailable at prediction time? Did evaluation data influence our choices? A good split answers only the first.</aside>
+
+## Your preflight checklist
+
+<ul>
+  <li><strong>Prediction moment:</strong> What exactly is known when the prediction is made?</li>
+  <li><strong>Feature lineage:</strong> When was each value created, and could it encode the outcome or its aftermath?</li>
+  <li><strong>Learned preprocessing:</strong> Are imputation, scaling, feature selection, and PCA fit inside each training fold?</li>
+  <li><strong>Split design:</strong> Does the split respect customers, patients, time, and other dependencies relevant to deployment?</li>
+  <li><strong>Test-set boundary:</strong> Has the test score influenced any feature, model, or hyperparameter decision?</li>
+</ul>
+
+**A high score is a clue, not a verdict.** Trust it only after tracing the information that produced it.
+
+<DiscussionQuestion>A validation set’s labels stayed hidden, but its features were used to calculate a scaler before the split. Is that a leak? What information crossed the boundary?</DiscussionQuestion>
+
+## Further reading
+
+#### Kaufman et al. (2012)
+
+[“Leakage in Data Mining: Formulation, Detection, and Avoidance.”](https://doi.org/10.1145/2382577.2382579) *ACM Transactions on Knowledge Discovery from Data*, 6(4).
+
+#### scikit-learn: Common pitfalls and recommended practices
+
+[Data leakage and inconsistent preprocessing](https://scikit-learn.org/stable/common_pitfalls.html#data-leakage).
+
+<p className={styles.nextLesson}><span>COURSE THREAD</span><a href="/lectures/ml101-04">Back to Lecture 04 · Trust, but verify ↗</a></p>

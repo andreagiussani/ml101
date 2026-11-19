@@ -34,6 +34,11 @@ export default function Home(): React.ReactElement {
             <span className={styles.lectureSubtitle}>Cross-validation, model selection, and the score you should trust.</span>
             <span className={styles.arrow} aria-hidden="true">↗</span>
           </Link>
+          <Link className={styles.lectureCard} to="/lectures/ml101-05">
+            <span className={styles.lectureTitle}>Data leakage</span>
+            <span className={styles.lectureSubtitle}>Follow the information. Find the hidden path to an untrustworthy score.</span>
+            <span className={styles.arrow} aria-hidden="true">↗</span>
+          </Link>
         </div>
       </main>
     </Layout>
