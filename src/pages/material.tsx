@@ -31,6 +31,10 @@ export default function Material(): React.ReactElement {
         <span className={styles.copy}><strong>Data leakage: follow the information</strong><small>Find the hidden paths that make an experiment look better than it is.</small></span>
         <span className={styles.arrow} aria-hidden="true">↗</span>
       </Link>
+      <Link className={styles.card} to="/lectures/ml101-06">
+        <span className={styles.copy}><strong>Trees and boosting: one question, one correction</strong><small>Explore decision trees, loss gradients, and sequential corrections.</small></span>
+        <span className={styles.arrow} aria-hidden="true">↗</span>
+      </Link>
     </main>
   </Layout>;
 }

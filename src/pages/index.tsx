@@ -39,6 +39,11 @@ export default function Home(): React.ReactElement {
             <span className={styles.lectureSubtitle}>Follow the information. Find the hidden path to an untrustworthy score.</span>
             <span className={styles.arrow} aria-hidden="true">↗</span>
           </Link>
+          <Link className={styles.lectureCard} to="/lectures/ml101-06">
+            <span className={styles.lectureTitle}>Trees and boosting</span>
+            <span className={styles.lectureSubtitle}>One question. One correction. Explore the math and watch the models learn.</span>
+            <span className={styles.arrow} aria-hidden="true">↗</span>
+          </Link>
         </div>
       </main>
     </Layout>
