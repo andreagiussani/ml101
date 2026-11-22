@@ -27,17 +27,15 @@ const stumpError = sse(students.map((student) => student.y));
 export function Lecture06Hero() {
   return <header className={styles.hero}>
     <div className={styles.heroText}>
-      <p className={styles.kicker}>TREES &amp; BOOSTING</p>
-      <h1>One question.<br />One correction.</h1>
-      <p>A tree divides the world into regions. Boosting learns what to add when those regions still miss something.</p>
-      <nav className={styles.heroNav} aria-label="On this page"><a href="#trees">Trees</a><a href="#boosting">Boosting</a></nav>
+      <p className={styles.kicker}>DECISION TREES</p>
+      <h1>One question.<br />Two leaves.</h1>
+      <p>Each answer sends a student to a leaf. The leaf predicts the average grade of the students it contains.</p>
+      <nav className={styles.heroNav} aria-label="On this page"><a href="#trees">Explore the tree</a></nav>
     </div>
-    <div className={styles.heroArt} role="img" aria-label="A decision tree branches into regions, then small corrections accumulate into a prediction">
-      <div className={styles.treeRoot}>ASK A QUESTION</div>
+    <div className={styles.heroArt} role="img" aria-label="A decision tree asks whether study time is at most five hours. Yes leads to students A and B and a predicted grade of 8.5. No leads to students C and D and a predicted grade of 15.5.">
+      <div className={styles.treeRoot}>STUDY TIME ≤ 5 HOURS?</div>
       <div className={styles.branch}><span>YES</span><span>NO</span></div>
-      <div className={styles.leafRow}><i>REGION 1</i><i>REGION 2</i></div>
-      <div className={styles.correctionLabel}>THEN ADD WHAT IS STILL MISSING</div>
-      <div className={styles.corrections}><b>F₀</b><span>+</span><b>ηh₁</b><span>+</span><b>ηh₂</b><span>+</span><b>…</b></div>
+      <div className={styles.leafRow}><i><span>A · B</span><strong>8.5</strong><small>predicted grade</small></i><i><span>C · D</span><strong>15.5</strong><small>predicted grade</small></i></div>
     </div>
     <span className={styles.heroIndex}>DECISION TREES</span>
   </header>;
