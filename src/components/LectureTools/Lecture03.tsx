@@ -321,7 +321,7 @@ export function ShrinkageExplorer() {
         <div className={styles.coefficientTrack} aria-label={`LASSO coefficient ${lasso.toFixed(2)} relative to original ${z.toFixed(2)}`}><i className={lasso < 0 ? styles.negativeCoefficient : ''} style={{ width: `${Math.abs(lasso) / maxMagnitude * 50}%` }} /></div>
       </article>
     </div>
-    <p className={styles.assumption}>The closed forms below assume centered, standardized predictors with an orthogonal design, and use the lecture’s penalty convention.</p>
+    <p className={styles.assumption}>The closed forms below assume centered, standardized predictors with an orthogonal design, using the penalty convention defined above.</p>
     <div className={styles.ruleRows}><div><b>Ridge</b><MathDisplay formula="ridgeRule" /></div><div><b>LASSO</b><MathDisplay formula="lassoRule" /></div></div>
   </section>;
 }

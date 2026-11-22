@@ -32,7 +32,7 @@
 .rangeRow label { color: #17263a; font-weight: 600; }
 .rangeRow input { width: 100%; accent-color: #007f86; }
 .rangeRow output { display: grid; min-width: 2.8rem; min-height: 1.8rem; place-items: center; padding: 0 .3rem; border-radius: 5px; background: #e7f3f2; color: #005e63; font-variant-numeric: tabular-nums; }
-.equationCard { margin: 1rem 0 1.2rem; padding: .9rem clamp(.9rem, 2.5vw, 1.2rem); border: 1px solid #c8e0df; border-left: 4px solid #007f86; border-radius: 8px; background: #f3f9f8; }
+.equationCard { margin: 1rem 0 1.2rem; padding: .9rem clamp(.9rem, 2.5vw, 1.2rem); border: 1px solid var(--ml101-math-border); border-left: 4px solid var(--ml101-math-accent); border-radius: 8px; background: var(--ml101-math-panel); }
 .equationCard figcaption { margin-top: .3rem; color: #526174; font-size: .86rem; }
 @media (max-width: 600px) {
   .rangeRow { grid-template-columns: 1fr auto; gap: .35rem .7rem; }
@@ -61,19 +61,16 @@
 .errorBalance { display: flex; justify-content: space-between; gap: .6rem; flex-wrap: wrap; padding-top: .75rem; border-top: 1px solid #e2e8ee; color: #17263a; }
 .errorBalance span { color: #64748b; }
 .mathViewport { display: flex; justify-content: center; width: 100%; min-width: 0; overflow-x: auto; padding: .3rem 0; color: #17263a; }
-.mathViewport :global(math) { display: block; min-width: max-content; font-size: clamp(1rem, 2.4vw, 1.3rem); line-height: 1.55; }
-.equationCard { margin: 1rem 0 1.2rem; padding: .9rem clamp(.9rem, 2.5vw, 1.2rem); border: 1px solid #c8e0df; border-left: 4px solid #007f86; border-radius: 8px; background: #f3f9f8; }
+.mathViewport :global(math) { display: block; min-width: max-content; font-family: var(--ml101-math-font); font-size: clamp(1.15rem, 2.5vw, 1.65rem); line-height: 1.65; }
+.equationCard { margin: 1rem 0 1.2rem; padding: .9rem clamp(.9rem, 2.5vw, 1.2rem); border: 1px solid var(--ml101-math-border); border-left: 4px solid var(--ml101-math-accent); border-radius: 8px; background: var(--ml101-math-panel); }
 .equationCard .eyebrow { margin-bottom: .25rem; }
 .equationCard figcaption { margin-top: .3rem; color: #526174; font-size: .86rem; }
 .penaltyGrid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: .7rem; margin: 1.1rem 0; }
-.penaltyCard { display: grid; grid-template-rows: auto 5.2rem 1fr; min-width: 0; padding: .85rem; border: 1px solid #e2e8ee; border-top: 3px solid #c8e0df; border-radius: 8px; background: #fff; }
-.penaltyCard:nth-child(1) { border-top-color: #007f86; }
-.penaltyCard:nth-child(2) { border-top-color: #f4b942; }
-.penaltyCard:nth-child(3) { border-top-color: #64748b; }
+.penaltyCard { display: grid; grid-template-rows: auto 5.2rem 1fr; min-width: 0; padding: .85rem; border: 1px solid var(--ml101-math-border); border-left: 4px solid var(--ml101-math-accent); border-radius: 8px; background: var(--ml101-math-panel); }
 .penaltyCard h3 { min-height: 1.45rem; margin: .1rem 0 .4rem; font-size: 1rem; }
 .penaltyCard .mathViewport { min-height: 5.2rem; align-items: center; overflow-x: hidden; }
 .penaltyCard p { margin: .45rem 0 .1rem; color: #526174; font-size: .88rem; line-height: 1.5; }
-.penaltyCard .mathViewport :global(math) { font-size: clamp(.9rem, 1.6vw, 1.05rem); }
+.penaltyCard .mathViewport :global(math) { font-family: var(--ml101-math-font); font-size: clamp(1rem, 1.8vw, 1.2rem); }
 .geometryChoice { display: flex; flex-wrap: wrap; gap: .5rem; margin: .9rem 0; }
 .geometryStage { display: grid; grid-template-columns: minmax(230px, .9fr) minmax(220px, 1.1fr); align-items: center; gap: .75rem 1rem; padding: .8rem; border-radius: 8px; background: #fbfcfd; }
 .geometryStage svg { display: block; width: 100%; max-height: 205px; }
@@ -99,10 +96,10 @@
 .zeroedCard h4 { color: #a86b10; }
 .assumption { margin: .75rem 0; color: #64748b; font-size: .84rem; }
 .ruleRows { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: .7rem; }
-.ruleRows > div { min-width: 0; padding: .6rem .8rem; border: 1px solid #e7edf0; border-radius: 7px; }
+.ruleRows > div { min-width: 0; padding: .6rem .8rem; border: 1px solid var(--ml101-math-border); border-left: 4px solid var(--ml101-math-accent); border-radius: 7px; background: var(--ml101-math-panel); }
 .ruleRows b { color: #007f86; font-size: .82rem; }
 .ruleRows .mathViewport { justify-content: flex-start; }
-.ruleRows .mathViewport :global(math) { font-size: 1rem; }
+.ruleRows .mathViewport :global(math) { font-size: 1.15rem; }
 @media (max-width: 720px) {
   .sampleGrid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .penaltyGrid { grid-template-columns: 1fr; }
@@ -118,5 +115,5 @@
   .profileRow strong { max-width: none; }
   .coefficientCompare, .ruleRows { grid-template-columns: 1fr; }
   .coefficientCard p { min-height: 0; }
-  .mathViewport :global(math) { font-size: .98rem; }
+  .mathViewport :global(math) { font-family: var(--ml101-math-font); font-size: 1rem; }
 }

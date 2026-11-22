@@ -4,14 +4,14 @@ title: 'Can we trust a perfect fit?'
 description: 'The price of fitting the data: bias, variance, and regularization.'
 sidebar_position: 3
 slug: /ml101-03
+hide_title: true
 ---
 
 import { DiscussionQuestion } from '@site/src/components/LectureTools';
 import { ModelFitExplorer, SampleSensitivityExplorer, BiasVarianceExplorer, FormulaCallout, PenaltySummary, PenaltyGeometryExplorer, ShrinkageExplorer, SelectionPathExplorer } from '@site/src/components/LectureTools/Lecture03';
+import { Lecture03Hero } from '@site/src/components/LectureTools/Lecture0103';
 
-# Can we trust a perfect fit?
-
-<p className="chapterDek">The price of fitting the data · Bias, variance, and the art of learning less</p>
+<Lecture03Hero />
 
 **Can a machine learning model learn too much?** A model can match its training data extremely well and still make worse predictions on new observations. We will see why, then explore how Ridge, LASSO, and Elastic Net trade fit for stability.
 
@@ -85,6 +85,8 @@ The L2 constraint used by Ridge is circular in two dimensions. The L1 constraint
 Under centered, standardized, orthogonal predictors, LASSO’s one-coefficient solution is **soft thresholding**. If <var>z</var><sub>j</sub> is the corresponding OLS coefficient, the positive-part operation subtracts the penalty and clips negative results to zero. The orthogonal design matters: this closed form is not a general formula for correlated predictors.
 
 <ShrinkageExplorer />
+
+For a fully worked one-coefficient derivation, see [why LASSO can set a coefficient to exactly zero →](/lectures/lasso-math).
 
 The sharp corner in the geometry and the flat region in the coefficient map are two views of the same L1 property. Ridge continuously shrinks a nonzero coefficient; LASSO can map a whole interval of small coefficients to exactly zero.
 
