@@ -34,7 +34,10 @@ export function Lecture06Hero() {
     </div>
     <div className={styles.heroArt} role="img" aria-label="A decision tree asks whether study time is at most five hours. Yes leads to students A and B and a predicted grade of 8.5. No leads to students C and D and a predicted grade of 15.5.">
       <div className={styles.treeRoot}>STUDY TIME ≤ 5 HOURS?</div>
-      <div className={styles.branch}><span>YES</span><span>NO</span></div>
+      <div className={styles.branch}>
+        <svg className={styles.branchLines} viewBox="0 0 100 52" preserveAspectRatio="none" aria-hidden="true"><path d="M 50 0 V 16 M 50 16 L 23 52 M 50 16 L 77 52" /></svg>
+        <span>YES</span><span>NO</span>
+      </div>
       <div className={styles.leafRow}><i><span>A · B</span><strong>8.5</strong><small>predicted grade</small></i><i><span>C · D</span><strong>15.5</strong><small>predicted grade</small></i></div>
     </div>
     <span className={styles.heroIndex}>DECISION TREES</span>
