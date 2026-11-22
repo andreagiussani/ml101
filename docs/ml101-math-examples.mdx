@@ -38,7 +38,7 @@ import styles from '@site/src/components/LectureTools/lecture07Math.module.css';
   <h2>3 · What does one more split buy?</h2>
   <p>Grow a second question only inside the low-study branch: <strong>absences ≤ 10?</strong> Student B (8 absences) enters one new leaf; student A (12) enters the other. C and D remain together. The three leaf predictions are 7, 10, and 15.5; the training SSE becomes 0.5.</p>
   <div className={styles.result}>The lower error fits these four training rows closely. It does not establish that a deeper tree will predict new students better. Tree depth and leaf size need validation, and the apparent relationship between study and grades is not a causal estimate.</div>
-  <p>Cost-complexity pruning compares fit against the number of leaves. With α charged per leaf, the stump costs 54 + α and this one-split tree costs 5 + 2α:</p>
+  <p>Cost-complexity pruning compares fit against the number of leaves. With α charged per leaf, the no-split tree (one leaf) costs 54 + α; the one-split decision stump (two leaves) costs 5 + 2α:</p>
   <PruningMath />
   <p className={styles.figureNote}>For this unnormalized four-observation SSE, the split wins when α &lt; 49; at α = 49 the two choices tie. Implementations may normalize loss differently, which changes the numeric scale of α.</p>
 </section>

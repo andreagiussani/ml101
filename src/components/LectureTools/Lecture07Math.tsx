@@ -72,12 +72,12 @@ export function ParentSseMath() {
 }
 
 export function PruningMath() {
-  const stump = mrow(mtext('stump: '), mn(54), mo('+'), mi('α'));
-  const split = mrow(mtext('one split: '), mn(5), mo('+'), mn(2), mi('α'));
+  const stump = mrow(mtext('no split · one leaf: '), mn(54), mo('+'), mi('α'));
+  const split = mrow(mtext('one split · two leaves: '), mn(5), mo('+'), mn(2), mi('α'));
   const compare = mrow(mn(5), mo('+'), mn(2), mi('α'), mo('<'), mn(54), mo('+'), mi('α'), mo('⇒'), mi('α'), mo('<'), mn(49));
   return <div className={styles.equationStack}>
-    <Equation caption="Stump · one leaf" label="The stump objective is 54 plus alpha.">{stump}</Equation>
-    <Equation caption="One split · two leaves" label="The one split tree objective is 5 plus 2 alpha.">{split}</Equation>
+    <Equation caption="No split · one leaf" label="The no-split tree objective is 54 plus alpha.">{stump}</Equation>
+    <Equation caption="Decision stump · one split, two leaves" label="The decision stump objective is 5 plus 2 alpha.">{split}</Equation>
     <Equation caption="When is the split worth it?" label="The split is preferred when alpha is less than 49.">{compare}</Equation>
   </div>;
 }
