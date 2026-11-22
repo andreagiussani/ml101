@@ -1,6 +1,20 @@
-# ML101 — Introduction to Machine Learning
+# ML101
+
+An interactive introduction to machine learning, with visual explanations and worked examples.
+
+## Explore the material
+
+- [What is machine learning?](https://probablyml.com/lectures/ml101-01)
+- [Missing data and imputation](https://probablyml.com/lectures/ml101-02)
+- [Generalization and regularization](https://probablyml.com/lectures/ml101-03)
+- [Cross-validation and model selection](https://probablyml.com/lectures/ml101-04)
+- [Data leakage](https://probablyml.com/lectures/ml101-05)
+- [Decision trees and boosting](https://probablyml.com/lectures/ml101-06)
+- [LASSO: The Algebra Behind Zero](https://probablyml.com/lectures/lasso-math)
+- [Trees & Boosting: Worked Calculations](https://probablyml.com/lectures/math-examples)
 
 ## Run locally
+
 Requires Node.js 18 or later.
 
 ```bash
@@ -8,7 +22,8 @@ npm ci
 npm start
 ```
 
-Open the local URL `http://localhost:3000/ml101/`. The Material page lists available lectures: Lecture 01 is at `/lectures/ml101-01`, Lecture 02 is at `/lectures/ml101-02`, and Lecture 03 is at `/lectures/ml101-03`. The site navigation also links to Home and About.
+Open the local URL printed by Docusaurus (typically `http://localhost:3000/ml101/`).
+
 ## Build and typecheck
 
 ```bash
@@ -16,19 +31,14 @@ npm run typecheck
 npm run build
 ```
 
-The build checks internal links and emits the static site into `build/`.
+The production site is generated in `build/`.
 
-## Add a future lecture
+## Project structure
 
-Write a new MDX document in `docs/` with a unique `id` and `slug`, then add its document ID to `sidebars.ts`. Only published lectures should be linked in the navigation. Interactive chapter elements live in `src/components/LectureTools`; global design tokens and Docusaurus styles are in `src/css/custom.css`.
+Pages are written in `docs/`. Interactive examples live in `src/components/LectureTools/`, and shared site styles live in `src/css/custom.css`.
 
-## Content source
+## Licensing
 
-Lecture 01 follows `ML101_01_Intro.pdf`; Lecture 02 follows `ML101_02_Data.pdf`; Lecture 03 follows `ML101_03_Regularization (1).pdf`. Selected references and historical citations are drawn from the decks.
-
-## Licensing and reuse
-
-- **Website code** is licensed under the MIT License in [`LICENSE`](LICENSE).
-- **Original educational text and student-facing explanations for Lectures 01–03** are licensed under CC BY 4.0; see [`CONTENT-LICENSE.md`](CONTENT-LICENSE.md).
-- Suggested attribution for reused course material: **Andrea Giussani (2026), probablyml.com.** Please indicate if you adapted the material and retain citations to the original sources.
-- The source lecture PDF, logos and trademarks, cited papers and books, and other third-party material are excluded from these licenses unless explicitly stated. Reuse them under their own terms.
+- Website code: MIT; see [`LICENSE`](LICENSE).
+- Original educational text for Lectures 01–03: CC BY 4.0; see [`CONTENT-LICENSE.md`](CONTENT-LICENSE.md).
+- Source lecture materials, third-party references, logos, and trademarks are not covered by these licenses unless stated otherwise.
