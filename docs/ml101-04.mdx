@@ -4,6 +4,7 @@ title: 'Trust, but verify'
 description: 'Cross-validation, model selection, and the score you should trust.'
 sidebar_position: 4
 slug: /ml101-04
+hide_title: true
 ---
 
 import { DiscussionQuestion } from '@site/src/components/LectureTools';
@@ -58,7 +59,7 @@ The observation-weighted form also works when folds differ in size. In that case
 
 ## Now let every candidate take the same exam
 
-Last lecture introduced λ as a control for LASSO’s penalty. It is a **hyperparameter**: a setting chosen before fitting, rather than a coefficient learned as part of the fit. We can score candidate values using the same cross-validation folds, then select the one with the lowest mean validation loss.
+In LASSO, λ controls the penalty. It is a **hyperparameter**: a setting chosen before fitting, rather than a coefficient learned as part of the fit. We can score candidate values using the same cross-validation folds, then select the one with the lowest mean validation loss.
 
 Tap a candidate below, then tap a fold. The invented scores change by fold; the best average gives us a rule for choosing λ from the development data.
 
@@ -94,7 +95,7 @@ If a disappointing test result sends us back to adjust the model, the test resul
 
 <DiscussionQuestion>If five-fold cross-validation selects λ = 0.1, can we report that same cross-validation score as the final performance? What would the test set add?</DiscussionQuestion>
 
-<p className={styles.nextLesson}><span>UP NEXT · LECTURE 05</span><a href="/lectures/ml101-05">Data leakage: follow the information →</a></p>
+<p className={styles.nextLesson}><span>RELATED TOPIC</span><a href="/lectures/ml101-05">Data leakage: follow the information →</a></p>
 
 ## Further reading
 

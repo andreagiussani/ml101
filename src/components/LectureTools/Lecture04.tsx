@@ -73,7 +73,7 @@ export function SingleSplitChart() {
 export function Lecture04Hero() {
   return <header className={styles.hero}>
     <div className={styles.heroCopy}>
-      <p className={styles.heroKicker}><span /> ML101 · FIELD NOTES 04</p>
+      <p className={styles.heroKicker}><span /> MODEL EVALUATION</p>
       <h1>Trust,<br />but verify.</h1>
       <p className={styles.heroDek}>A model aced the practice test. Would you trust it with the real one?</p>
       <a className={styles.heroLink} href="#the-exam">See how we test a model <span aria-hidden="true">↓</span></a>

@@ -63,12 +63,12 @@
 .splitReadout { margin: .8rem 0 0; padding: .7rem .8rem; border-radius: 5px; background: #f3f6f7; color: #394a5c !important; font-size: .84rem; }
 .splitCaution { margin: 1.2rem 0 2rem; padding: .9rem 1.1rem; border-left: 3px solid #d08c2d; border-radius: 0 6px 6px 0; background: #fff9e9; color: #526174; line-height: 1.65; }
 .splitCaution strong { color: #80520a; }
-.formulaCard { margin: 1.2rem 0 1.5rem; padding: clamp(.9rem, 3vw, 1.35rem); border: 1px solid #c8e0df; border-left: 4px solid #007f86; border-radius: 8px; background: #f3f9f8; }
+.formulaCard { margin: 1.2rem 0 1.5rem; padding: clamp(.9rem, 3vw, 1.35rem); border: 1px solid var(--ml101-math-border); border-left: 4px solid var(--ml101-math-accent); border-radius: 8px; background: var(--ml101-math-panel); }
 .formulaViewport { display: flex; justify-content: center; width: 100%; min-width: 0; overflow-x: auto; padding: .45rem 0 .8rem; color: #17263a; }
-.formulaViewport :global(math) { display: block; min-width: max-content; font-size: clamp(1rem, 2.25vw, 1.35rem); line-height: 1.6; }
+.formulaViewport :global(math) { display: block; min-width: max-content; font-family: var(--ml101-math-font); font-size: clamp(1.15rem, 2.5vw, 1.65rem); line-height: 1.65; }
 .equalFold .formulaViewport { padding: .35rem 0 .1rem; }
 .equalFold span.formulaViewport { display: flex; justify-content: center; width: 100%; }
-.equalFold .formulaViewport :global(math) { font-size: clamp(.98rem, 2vw, 1.15rem); }
+.equalFold .formulaViewport :global(math) { font-family: var(--ml101-math-font); font-size: clamp(1.05rem, 2vw, 1.3rem); }
 .formulaCard > p { margin: .6rem 0 0; color: #526174; font-size: .88rem; line-height: 1.65; }
 .formulaCard .equalFold { padding-top: .7rem; border-top: 1px solid #d6e6e4; }
 .equalFold span { display: block; margin-top: .45rem; color: #17263a; font-family: 'Newsreader', Georgia, serif; font-size: 1.15rem; text-align: center; }
