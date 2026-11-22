@@ -1,8 +1,8 @@
 .exercise, .graphCard { margin: 1.5rem 0 2rem; padding: clamp(1rem, 3vw, 1.4rem); background: #fff; border: 1px solid #e2e8ee; border-radius: 10px; }
-.formulaBox { margin: 1rem 0 1.25rem; padding: clamp(1rem, 3vw, 1.3rem); border: 1px solid #c8e0df; border-left: 4px solid #007f86; border-radius: 8px; background: #f3f9f8; }
-.formulaLabel { margin: 0 0 .55rem; color: #007f86; text-transform: uppercase; letter-spacing: .08em; font-size: .72rem; font-weight: 700; }
-.formula { margin: 0; color: #17263a; font-family: Georgia, 'Times New Roman', serif; font-size: clamp(1rem, 2.8vw, 1.35rem); line-height: 1.8; overflow-wrap: anywhere; }
-.radicalContent { display: inline-block; padding: 0 .15em; border-top: 1px solid currentColor; }
+.formulaBox { margin: 1rem 0 1.25rem; padding: clamp(1rem, 3vw, 1.3rem); border: 1px solid var(--ml101-math-border); border-left: 4px solid var(--ml101-math-accent); border-radius: 8px; background: var(--ml101-math-panel); }
+.formulaLabel { margin: 0 0 .55rem; color: var(--ml101-math-accent); text-transform: uppercase; letter-spacing: .08em; font-size: .72rem; font-weight: 700; }
+.formulaMathViewport { display: grid; justify-items: center; gap: .2rem; min-height: 5.2rem; padding: .65rem .25rem; color: var(--ml101-math-ink); font-family: var(--ml101-math-font); font-size: clamp(1.15rem, 2.5vw, 1.65rem); line-height: 1.65; }
+.formulaMathViewport math { display: block; max-width: 100%; font-family: var(--ml101-math-font); font-size: 1em; }
 .formulaBox figcaption { margin-top: .5rem; color: #526174; font-size: .9rem; }
 .exercise { border-left: 3px solid #007f86; }
 .graphCard { overflow: hidden; }
@@ -61,5 +61,6 @@
   .barHead { align-items: flex-start; flex-direction: column; gap: .15rem; }
   .stepTrack { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .stepButton, .stepSelected { min-height: 3.2rem; }
+  .formulaMathViewport { justify-items: start; font-size: 1rem; }
 }
 @media (prefers-reduced-motion: reduce) { .barTrack span { transition: none; } }

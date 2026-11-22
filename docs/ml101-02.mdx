@@ -4,14 +4,14 @@ title: 'Can we trust our data?'
 description: 'How do we make useful predictions when some information is missing?'
 sidebar_position: 2
 slug: /ml101-02
+hide_title: true
 ---
 
 import { DiscussionQuestion } from '@site/src/components/LectureTools';
-import { MissingDataDecision, KNNImputationExplorer, DistanceScaleExplorer, RelationshipShapeExplorer, EuclideanDistanceFormula, BayesianRidgeFormula, MissForestStepper } from '@site/src/components/LectureTools/Lecture02';
+import { MissingDataDecision, KNNImputationExplorer, DistanceScaleExplorer, RelationshipShapeExplorer, EuclideanDistanceFormula, BayesianRidgeFormula, NrmseFormula, MissForestStepper } from '@site/src/components/LectureTools/Lecture02';
+import { Lecture02Hero } from '@site/src/components/LectureTools/Lecture0103';
 
-# Can we trust our data?
-
-<p className="chapterDek">When information is incomplete</p>
+<Lecture02Hero />
 
 An incomplete dataset invites quick fixes. Before choosing one, ask what information is missing, why it is missing, and what a filled-in value would mean.
 
@@ -44,7 +44,7 @@ For two observations, the distance combines their differences across the feature
 
 <EuclideanDistanceFormula />
 
-Explore the lecture’s example. Move *k* and watch both the neighbours and the income estimate change.
+Explore the example. Move *k* and watch both the neighbours and the income estimate change.
 
 <KNNImputationExplorer />
 
@@ -106,7 +106,7 @@ This is a simplified teaching view of Algorithm 1. The paper’s actual stopping
 
 When the original value is known, researchers can hide selected observed values, impute them, and compare estimates with the values that were hidden.
 
-- **Numerical variables — normalized root mean squared error (NRMSE):** `sqrt(mean((X_true − X_imputed)²) / Var(X_true))`.
+<NrmseFormula />
 - **Categorical variables — proportion falsely classified (PFC):** incorrect imputations divided by the number of hidden categorical entries.
 
 For both measures, lower is better. This experiment evaluates artificial missingness in benchmark data. It does not prove that the imputer will perform the same way when people selectively withhold information.

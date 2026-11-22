@@ -3,22 +3,55 @@ import styles from './lecture02.module.css';
 
 type MissingChoice = 'delete' | 'mean' | 'predict';
 
+type MathTag = 'mi' | 'mn' | 'mo' | 'mrow' | 'msub' | 'msup' | 'msqrt' | 'munderover' | 'mfrac';
+const mathNode = (tag: MathTag, ...children: React.ReactNode[]) => React.createElement(tag as React.ElementType, null, ...children);
+const mi = (value: string) => mathNode('mi', value);
+const mn = (value: string | number) => mathNode('mn', String(value));
+const mo = (value: string) => mathNode('mo', value);
+const mrow = (...children: React.ReactNode[]) => mathNode('mrow', ...children);
+const sub = (base: React.ReactNode, index: React.ReactNode) => mathNode('msub', base, index);
+const sup = (base: React.ReactNode, exponent: React.ReactNode) => mathNode('msup', base, exponent);
+
 export function EuclideanDistanceFormula() {
+  const index = mathNode('munderover', mo('∑'), mrow(mi('k'), mo('='), mn(1)), mi('p'));
+  const featureGap = mrow(mo('('), sub(mi('x'), mrow(mi('i'), mi('k'))), mo('−'), sub(mi('x'), mrow(mi('j'), mi('k'))), mo(')'));
+  const distance = mrow(mi('d'), mo('('), sub(mi('x'), mi('i')), mo(','), sub(mi('x'), mi('j')), mo(')'), mo('='), mathNode('msqrt', mrow(index, sup(featureGap, mn(2)))));
   return <figure className={styles.formulaBox} aria-labelledby="euclidean-distance-caption">
-    <p className={styles.formulaLabel}>Euclidean distance · across p features</p>
-    <p className={styles.formula} aria-label="Distance between x i and x j equals the square root of the sum, from k equals 1 to p, of x i k minus x j k, squared">
-      d(x<sub>i</sub>, x<sub>j</sub>) = √<span className={styles.radicalContent}>∑<sub>k = 1</sub><sup>p</sup> (x<sub>ik</sub> − x<sub>jk</sub>)<sup>2</sup></span>
-    </p>
-    <figcaption id="euclidean-distance-caption">For each feature, square the difference; add those contributions and take the square root.</figcaption>
+    <p className={styles.formulaLabel}>Euclidean distance · combine all p features</p>
+    <div className={styles.formulaMathViewport} role="math" aria-label="Distance between rows i and j equals the square root of the sum, over all p features, of each feature difference squared.">
+      {React.createElement('math' as React.ElementType, { display: 'block' }, distance)}
+    </div>
+    <figcaption id="euclidean-distance-caption">For feature 1, feature 2, …, through feature p: find the gap, square it, add the squared gaps, then take the square root.</figcaption>
+  </figure>;
+}
+
+export function NrmseFormula() {
+  const trueValues = sub(mi('X'), mi('true'));
+  const imputedValues = sub(mi('X'), mi('imputed'));
+  const difference = mrow(mo('('), trueValues, mo('−'), imputedValues, mo(')'));
+  const numerator = mrow(mi('mean'), mo('('), sup(difference, mn(2)), mo(')'));
+  const denominator = mrow(mi('Var'), mo('('), trueValues, mo(')'));
+  const formula = mrow(mi('NRMSE'), mo('='), mathNode('msqrt', mathNode('mfrac', numerator, denominator)));
+  return <figure className={styles.formulaBox} aria-labelledby="nrmse-caption">
+    <p className={styles.formulaLabel}>Numerical imputation · normalized error</p>
+    <div className={styles.formulaMathViewport} role="math" aria-label="Normalized root mean squared error equals the square root of the mean squared difference between the true and imputed values divided by the variance of the true values.">
+      {React.createElement('math' as React.ElementType, { display: 'block' }, formula)}
+    </div>
+    <figcaption id="nrmse-caption">Square the errors, average them, divide by the variance of the true values, then take the square root. Lower is better.</figcaption>
   </figure>;
 }
 
 export function BayesianRidgeFormula() {
+  const response = sub(mi('X'), mi('j'));
+  const otherFeatures = sub(mi('X'), mrow(mo('−'), mi('j')));
+  const conditional = mrow(response, mo('|'), otherFeatures, mo(','), mi('β'), mo(','), sup(mi('σ'), mn(2)), mo('∼'), mi('𝒩'), mo('('), sub(mi('μ'), mi('j')), mo(','), sup(mi('σ'), mn(2)), mo(')'));
+  const mean = mrow(sub(mi('μ'), mi('j')), mo('='), sub(mi('β'), mn(0)), mo('+'), sup(otherFeatures, mi('T')), mi('β'));
   return <figure className={styles.formulaBox} aria-labelledby="bayesian-ridge-caption">
     <p className={styles.formulaLabel}>Bayesian Ridge · conditional model</p>
-    <p className={styles.formula} aria-label="X j given X minus j, beta, and sigma squared is normally distributed with mean beta zero plus X minus j transpose beta and variance sigma squared">
-      X<sub>j</sub> | X<sub>−j</sub>, β, σ<sup>2</sup> ∼ Normal(β<sub>0</sub> + X<sub>−j</sub><sup>T</sup>β, σ<sup>2</sup>)
-    </p>
+    <div className={styles.formulaMathViewport} role="math" aria-label="X j conditional on other features follows a normal distribution with mean mu j and variance sigma squared; mu j equals beta zero plus X minus j transpose beta.">
+      {React.createElement('math' as React.ElementType, { display: 'block' }, conditional)}
+      {React.createElement('math' as React.ElementType, { display: 'block' }, mean)}
+    </div>
     <figcaption id="bayesian-ridge-caption">The value in one column is modelled using the other columns. The conditional mean is linear in those features.</figcaption>
   </figure>;
 }
@@ -105,7 +138,7 @@ export function KNNImputationExplorer() {
         <polygon className={styles.estimatePoint} points={`${x(38)},${y(estimate) - 9} ${x(38) + 9},${y(estimate)} ${x(38)},${y(estimate) + 9} ${x(38) - 9},${y(estimate)}`} />
         <text className={styles.queryLabel} x={x(38) + 9} y={top + 15}>C · income missing</text>
       </svg>
-      <figcaption>Illustrative values from the lecture’s KNNImputer example; income is shown in thousands of euros.</figcaption>
+      <figcaption>Illustrative values for this KNNImputer example; income is shown in thousands of euros.</figcaption>
     </figure>
     <p className={styles.liveResult} aria-live="polite"><strong>With k = {k}:</strong> nearest customers {neighbors.map((row) => row.id).join(', ')} → estimated income <strong>€{money}</strong>.</p>
     <p className={styles.note}>Changing <em>k</em> changes which observations contribute and can change the estimate. This toy graph uses age alone; real distance calculations may use several observed features.</p>
@@ -168,7 +201,7 @@ export function RelationshipShapeExplorer() {
         <text className={styles.tickLabel} x="578" y="260" textAnchor="end">Warmer</text>
         <path className={isCurve ? styles.curve : styles.line} d={isCurve ? 'M 92 62 C 180 65, 216 195, 330 205 C 444 195, 480 65, 568 62' : 'M 92 70 L 568 195'} />
       </svg>
-      <figcaption>Schematic relationship from the lecture; not measured data.</figcaption>
+      <figcaption>Schematic relationship; these are not measured data.</figcaption>
     </figure>
     <p className={styles.liveResult} aria-live="polite">{isCurve ? 'The U-shape captures higher use at both temperature extremes.' : 'A simple linear trend cannot rise at both ends and fall in the middle.'}</p>
     <p className={styles.note}>A linear model can represent this shape if useful nonlinear features are supplied. The question is what relationship the model is given the ability to express.</p>
