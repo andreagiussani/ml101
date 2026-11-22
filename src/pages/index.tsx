@@ -13,7 +13,7 @@ export default function Home(): React.ReactElement {
         <h1>ML101 — Introduction to<br className={styles.desktopBreak} /> Machine Learning</h1>
         <p className={styles.question}>How do we turn imperfect data into reliable predictions?</p>
         <p className={styles.intro}>An interactive textbook for undergraduate students. Explore how machine learning learns from examples, handles incomplete information, controls complexity, and earns a trustworthy score.</p>
-        <div className={styles.lectureGrid} aria-label="Course material">
+        <div className={styles.lectureGrid} aria-label="Machine learning topics">
           <Link className={styles.lectureCard} to="/lectures/ml101-01">
             <span className={styles.lectureTitle}>What is Machine Learning?</span>
             <span className={styles.lectureSubtitle}>A short history of an old idea.</span>
@@ -42,6 +42,16 @@ export default function Home(): React.ReactElement {
           <Link className={styles.lectureCard} to="/lectures/ml101-06">
             <span className={styles.lectureTitle}>Trees and boosting</span>
             <span className={styles.lectureSubtitle}>One question. One correction. Explore the math and watch the models learn.</span>
+            <span className={styles.arrow} aria-hidden="true">↗</span>
+          </Link>
+          <Link className={styles.lectureCard} to="/lectures/lasso-math">
+            <span className={styles.lectureTitle}>LASSO math</span>
+            <span className={styles.lectureSubtitle}>Why a coefficient can become exactly zero.</span>
+            <span className={styles.arrow} aria-hidden="true">↗</span>
+          </Link>
+          <Link className={styles.lectureCard} to="/lectures/math-examples">
+            <span className={styles.lectureTitle}>Trees &amp; boosting math</span>
+            <span className={styles.lectureSubtitle}>Worked calculations for tree splits, pruning, residuals, and gradient boosting.</span>
             <span className={styles.arrow} aria-hidden="true">↗</span>
           </Link>
         </div>
