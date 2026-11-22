@@ -4,6 +4,7 @@ title: 'Data leakage: follow the information'
 description: 'Find the hidden paths that can make a machine-learning experiment look better than it is.'
 sidebar_position: 5
 slug: /ml101-05
+hide_title: true
 ---
 
 import { DiscussionQuestion } from '@site/src/components/LectureTools';
@@ -12,7 +13,7 @@ import styles from '@site/src/components/LectureTools/lecture05.module.css';
 
 <header className={styles.hero}>
   <div className={styles.heroCopy}>
-    <p className={styles.kicker}>ML101 · FIELD NOTES 05</p>
+    <p className={styles.kicker}>DATA LEAKAGE</p>
     <h1>Data<br />leakage.</h1>
     <p className={styles.deck}>A model reports 99% accuracy. Before we celebrate, let’s trace where every bit of information came from.</p>
     <a className={styles.heroLink} href="#follow-the-information">Open the case files <span aria-hidden="true">↓</span></a>
@@ -102,4 +103,4 @@ Use development data for iteration and validation for choices. Keep the test set
 
 [Data leakage and inconsistent preprocessing](https://scikit-learn.org/stable/common_pitfalls.html#data-leakage).
 
-<p className={styles.nextLesson}><span>UP NEXT · LECTURE 06</span><a href="/lectures/ml101-06">Trees and boosting: one question, one correction →</a></p>
+<p className={styles.nextLesson}><span>RELATED TOPIC</span><a href="/lectures/ml101-06">Trees and boosting: one question, one correction →</a></p>
