@@ -44,6 +44,11 @@ export default function Home(): React.ReactElement {
             <span className={styles.lectureSubtitle}>One question. One correction. Explore the math and watch the models learn.</span>
             <span className={styles.arrow} aria-hidden="true">↗</span>
           </Link>
+        </div>
+        <section className={styles.appendix} aria-labelledby="appendix-heading">
+          <h2 id="appendix-heading" className={styles.sectionTitle}>Appendix</h2>
+          <p className={styles.sectionIntro}>Optional algebra and worked calculations.</p>
+          <div className={styles.lectureGrid} aria-label="Appendix material">
           <Link className={styles.lectureCard} to="/lectures/lasso-math">
             <span className={styles.lectureTitle}>LASSO: The Algebra Behind Zero</span>
             <span className={styles.lectureSubtitle}>Why a coefficient can become exactly zero.</span>
@@ -54,7 +59,8 @@ export default function Home(): React.ReactElement {
             <span className={styles.lectureSubtitle}>Worked calculations for tree splits, pruning, residuals, and gradient boosting.</span>
             <span className={styles.arrow} aria-hidden="true">↗</span>
           </Link>
-        </div>
+          </div>
+        </section>
       </main>
     </Layout>
   );

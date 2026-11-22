@@ -1,7 +1,23 @@
 import type { SidebarsConfig } from '@docusaurus/plugin-content-docs';
 
 const sidebars: SidebarsConfig = {
-  lectureSidebar: [{ type: 'doc', id: 'ml101-01' }, { type: 'doc', id: 'ml101-02' }, { type: 'doc', id: 'ml101-03' }, { type: 'doc', id: 'ml101-04' }, { type: 'doc', id: 'ml101-05' }, { type: 'doc', id: 'ml101-06' }, { type: 'doc', id: 'ml101-math-lasso' }, { type: 'doc', id: 'ml101-math-examples' }],
+  lectureSidebar: [
+    { type: 'doc', id: 'ml101-01' },
+    { type: 'doc', id: 'ml101-02' },
+    { type: 'doc', id: 'ml101-03' },
+    { type: 'doc', id: 'ml101-04' },
+    { type: 'doc', id: 'ml101-05' },
+    { type: 'doc', id: 'ml101-06' },
+    {
+      type: 'category',
+      label: 'Appendix',
+      collapsed: false,
+      items: [
+        { type: 'doc', id: 'ml101-math-lasso' },
+        { type: 'doc', id: 'ml101-math-examples' },
+      ],
+    },
+  ],
 };
 
 export default sidebars;

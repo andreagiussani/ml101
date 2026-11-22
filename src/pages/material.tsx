@@ -35,14 +35,18 @@ export default function Material(): React.ReactElement {
         <span className={styles.copy}><strong>Trees and boosting: one question, one correction</strong><small>Explore decision trees, loss gradients, and sequential corrections.</small></span>
         <span className={styles.arrow} aria-hidden="true">↗</span>
       </Link>
-      <Link className={styles.card} to="/lectures/lasso-math">
-        <span className={styles.copy}><strong>LASSO: The Algebra Behind Zero</strong><small>Why a coefficient can become exactly zero.</small></span>
-        <span className={styles.arrow} aria-hidden="true">↗</span>
-      </Link>
-      <Link className={styles.card} to="/lectures/math-examples">
-        <span className={styles.copy}><strong>Trees &amp; Boosting: Worked Calculations</strong><small>Step-by-step calculations for regression trees and gradient boosting.</small></span>
-        <span className={styles.arrow} aria-hidden="true">↗</span>
-      </Link>
+      <section className={styles.appendix} aria-labelledby="appendix-heading">
+        <h2 id="appendix-heading" className={styles.sectionTitle}>Appendix</h2>
+        <p className={styles.sectionIntro}>Optional algebra and worked calculations.</p>
+        <Link className={styles.card} to="/lectures/lasso-math">
+          <span className={styles.copy}><strong>LASSO: The Algebra Behind Zero</strong><small>Why a coefficient can become exactly zero.</small></span>
+          <span className={styles.arrow} aria-hidden="true">↗</span>
+        </Link>
+        <Link className={styles.card} to="/lectures/math-examples">
+          <span className={styles.copy}><strong>Trees &amp; Boosting: Worked Calculations</strong><small>Step-by-step calculations for regression trees and gradient boosting.</small></span>
+          <span className={styles.arrow} aria-hidden="true">↗</span>
+        </Link>
+      </section>
     </main>
   </Layout>;
 }
