@@ -1,11 +1,12 @@
 import React, { useMemo, useState } from 'react';
 import styles from './lecture06.module.css';
+import { StagewiseUpdateEquation, TreePredictionEquation } from './Lecture06Math';
 
 const students = [
-  { id: 'A', x: 2, y: 7 },
-  { id: 'B', x: 3, y: 10 },
-  { id: 'C', x: 7, y: 16 },
-  { id: 'D', x: 8, y: 15 },
+  { id: 'A', x: 2, absences: 12, failures: 2, y: 7 },
+  { id: 'B', x: 3, absences: 8, failures: 1, y: 10 },
+  { id: 'C', x: 7, absences: 2, failures: 0, y: 16 },
+  { id: 'D', x: 8, absences: 4, failures: 0, y: 15 },
 ];
 
 const mean = (values: number[]) => values.reduce((sum, value) => sum + value, 0) / values.length;
@@ -26,10 +27,10 @@ const stumpError = sse(students.map((student) => student.y));
 export function Lecture06Hero() {
   return <header className={styles.hero}>
     <div className={styles.heroText}>
-      <p className={styles.kicker}>ML101 · FIELD NOTES 06</p>
+      <p className={styles.kicker}>TREES &amp; BOOSTING</p>
       <h1>One question.<br />One correction.</h1>
       <p>A tree divides the world into regions. Boosting learns what to add when those regions still miss something.</p>
-      <nav className={styles.heroNav} aria-label="Lecture sections"><a href="#trees">01 · Trees</a><a href="#boosting">02 · Boosting</a></nav>
+      <nav className={styles.heroNav} aria-label="On this page"><a href="#trees">Trees</a><a href="#boosting">Boosting</a></nav>
     </div>
     <div className={styles.heroArt} role="img" aria-label="A decision tree branches into regions, then small corrections accumulate into a prediction">
       <div className={styles.treeRoot}>ASK A QUESTION</div>
@@ -38,7 +39,7 @@ export function Lecture06Hero() {
       <div className={styles.correctionLabel}>THEN ADD WHAT IS STILL MISSING</div>
       <div className={styles.corrections}><b>F₀</b><span>+</span><b>ηh₁</b><span>+</span><b>ηh₂</b><span>+</span><b>…</b></div>
     </div>
-    <span className={styles.heroIndex}>LECTURE 06</span>
+    <span className={styles.heroIndex}>DECISION TREES</span>
   </header>;
 }
 
@@ -59,6 +60,81 @@ function RegressionPlot({ threshold }: { threshold: number }) {
     <text x="268" y="316" textAnchor="middle" className={styles.axisTitle}>Study time (hours / week)</text>
     <text x="14" y="159" textAnchor="middle" transform="rotate(-90 14 159)" className={styles.axisTitle}>Predicted grade</text>
   </svg>;
+}
+
+type SplitFeature = 'study' | 'absences';
+
+function FeaturePlane({ feature, cut, recursive = false, childCut = 10 }: { feature: SplitFeature; cut: number; recursive?: boolean; childCut?: number }) {
+  const x = (value: number) => 56 + value / 10 * 420;
+  const y = (value: number) => 254 - value / 14 * 205;
+  const splitY = y(cut);
+  const childY = y(childCut);
+  return <svg className={styles.plane} viewBox="0 0 520 300" role="img" aria-label={recursive ? 'Two-level partition of study hours and absences. The first split is study time at five hours; the low-study group is split again at the selected absence threshold.' : `${feature === 'study' ? 'Vertical' : 'Horizontal'} candidate split at ${cut} ${feature === 'study' ? 'study hours' : 'absences'}, with student grades shown in the two resulting regions.`}>
+    {[0, 5, 10].map((tick) => <g key={`x${tick}`}><line x1={x(tick)} x2={x(tick)} y1="49" y2="254" className={styles.planeGrid} /><text x={x(tick)} y="274" textAnchor="middle" className={styles.planeText}>{tick}</text></g>)}
+    {[0, 5, 10].map((tick) => <g key={`y${tick}`}><line x1="56" x2="476" y1={y(tick)} y2={y(tick)} className={styles.planeGrid} /><text x="46" y={y(tick) + 4} textAnchor="end" className={styles.planeText}>{tick}</text></g>)}
+    {recursive ? <>
+      <rect x={x(0)} y={y(14)} width={x(5) - x(0)} height={y(childCut) - y(14)} className={styles.regionOne} />
+      <rect x={x(0)} y={y(childCut)} width={x(5) - x(0)} height={y(0) - y(childCut)} className={styles.regionTwo} />
+      <rect x={x(5)} y={y(14)} width={x(10) - x(5)} height={y(0) - y(14)} className={styles.regionThree} />
+      <line x1={x(5)} x2={x(5)} y1={y(14)} y2={y(0)} className={styles.splitBoundary} />
+      <line x1={x(0)} x2={x(5)} y1={childY} y2={childY} className={styles.childBoundary} />
+      <text x={(x(0) + x(5)) / 2} y={y(13)} textAnchor="middle" className={styles.regionLabel}>LEAF A · 7</text>
+      <text x={(x(0) + x(5)) / 2} y={y(2)} textAnchor="middle" className={styles.regionLabel}>LEAF B · 10</text>
+      <text x={(x(5) + x(10)) / 2} y={y(7)} textAnchor="middle" className={styles.regionLabel}>LEAF C + D · 15.5</text>
+    </> : feature === 'study' ? <>
+      <rect x={x(0)} y={y(14)} width={x(cut) - x(0)} height={y(0) - y(14)} className={styles.regionOne} />
+      <rect x={x(cut)} y={y(14)} width={x(10) - x(cut)} height={y(0) - y(14)} className={styles.regionTwo} />
+      <line x1={x(cut)} x2={x(cut)} y1={y(14)} y2={y(0)} className={styles.splitBoundary} />
+      <text x={(x(0) + x(cut)) / 2} y="64" textAnchor="middle" className={styles.regionLabel}>YES · LEFT</text>
+      <text x={(x(cut) + x(10)) / 2} y="64" textAnchor="middle" className={styles.regionLabel}>NO · RIGHT</text>
+    </> : <>
+      <rect x={x(0)} y={y(14)} width={x(10) - x(0)} height={y(cut) - y(14)} className={styles.regionTwo} />
+      <rect x={x(0)} y={y(cut)} width={x(10) - x(0)} height={y(0) - y(cut)} className={styles.regionOne} />
+      <line x1={x(0)} x2={x(10)} y1={splitY} y2={splitY} className={styles.splitBoundary} />
+      <text x="267" y="64" textAnchor="middle" className={styles.regionLabel}>NO · MORE ABSENCES</text>
+      <text x="267" y="239" textAnchor="middle" className={styles.regionLabel}>YES · FEWER ABSENCES</text>
+    </>}
+    {students.map((student) => <g key={student.id}><circle cx={x(student.x)} cy={y(student.absences)} r="7" className={styles.planePoint} /><text x={x(student.x)} y={y(student.absences) - 10} textAnchor="middle" className={styles.planeLabel}>{student.id} · {student.y}</text></g>)}
+    <line x1="56" x2="476" y1="254" y2="254" className={styles.planeAxis} /><line x1="56" x2="56" y1="49" y2="254" className={styles.planeAxis} />
+    <text x="266" y="294" textAnchor="middle" className={styles.planeTitle}>Study time (hours / week)</text><text x="13" y="153" textAnchor="middle" transform="rotate(-90 13 153)" className={styles.planeTitle}>Absences</text>
+  </svg>;
+}
+
+export function TwoFeatureSplitLab() {
+  const [feature, setFeature] = useState<SplitFeature>('study');
+  const [studyCut, setStudyCut] = useState(5);
+  const [absenceCut, setAbsenceCut] = useState(6);
+  const [childCut, setChildCut] = useState(10);
+  const cut = feature === 'study' ? studyCut : absenceCut;
+  const affirmative = students.filter((student) => feature === 'study' ? student.x <= cut : student.absences <= cut);
+  const other = students.filter((student) => !affirmative.includes(student));
+  const firstSse = sse(affirmative.map((student) => student.y)) + sse(other.map((student) => student.y));
+  const nestedGroups = [students.filter((student) => student.x <= 5 && student.absences > childCut), students.filter((student) => student.x <= 5 && student.absences <= childCut), students.filter((student) => student.x > 5)];
+  const nestedSse = nestedGroups.reduce((total, group) => total + sse(group.map((student) => student.y)), 0);
+  return <section className={styles.twoFeatureLab} aria-labelledby="two-feature-title">
+    <div className={styles.twoFeatureHeading}><div><p className={styles.eyebrow}>TWO FEATURES · TWO EQUALLY GOOD QUESTIONS</p><h4 id="two-feature-title">The same four points, on a plane.</h4><p>Each dot is a student. Its x-position is study time; its y-position is absences. Select a candidate first split.</p></div>
+      <div className={styles.featureSwitch} role="group" aria-label="Choose the root split feature">
+        <button type="button" aria-pressed={feature === 'study'} className={feature === 'study' ? styles.featureOn : styles.featureButton} onClick={() => setFeature('study')}>Study time ≤ {studyCut}</button>
+        <button type="button" aria-pressed={feature === 'absences'} className={feature === 'absences' ? styles.featureOn : styles.featureButton} onClick={() => setFeature('absences')}>Absences ≤ {absenceCut}</button>
+      </div>
+    </div>
+    <div className={styles.twoFeatureGrid}>
+      <div className={styles.planeFrame}><FeaturePlane feature={feature} cut={cut} /><div className={styles.planeLegend}><span><i className={styles.planeDot} /> Student · observed grade</span><span><i className={styles.yesPatch} /> YES region</span><span><i className={styles.noPatch} /> NO region</span></div></div>
+      <div className={styles.twoFeatureControls}>
+        <div className={styles.axisControl}><label htmlFor="study-cut">Study threshold <strong>{studyCut.toFixed(1)} hours</strong></label><input id="study-cut" type="range" min="2.5" max="7.5" step="0.1" value={studyCut} onChange={(event) => setStudyCut(Number(event.target.value))} /></div>
+        <div className={styles.axisControl}><label htmlFor="absence-cut">Absence threshold <strong>{absenceCut.toFixed(1)}</strong></label><input id="absence-cut" type="range" min="3" max="10" step="0.1" value={absenceCut} onChange={(event) => setAbsenceCut(Number(event.target.value))} /></div>
+        <div className={styles.partitionStat}><span>YES · {affirmative.map((student) => student.id).join(', ')}</span><strong>{mean(affirmative.map((student) => student.y)).toFixed(1)}</strong><small>leaf mean · n = {affirmative.length}</small></div>
+        <div className={styles.partitionStat}><span>NO · {other.map((student) => student.id).join(', ')}</span><strong>{mean(other.map((student) => student.y)).toFixed(1)}</strong><small>leaf mean · n = {other.length}</small></div>
+        <div className={styles.partitionSse}>Combined child SSE <strong>{firstSse.toFixed(2)}</strong></div>
+      </div>
+    </div>
+    <p className={styles.tieNote}>At study time ≤ 5 and absences ≤ 6, both questions separate {feature === 'study' ? 'A + B from C + D' : 'C + D from A + B'} and produce SSE 5. They tie because they create the same two groups, with the YES/NO labels swapped.</p>
+    <div className={styles.recursiveDemo}>
+      <div><p className={styles.eyebrow}>NOW ASK AGAIN · INSIDE ONE BRANCH</p><h4>A second split makes three regions.</h4><p>Start with study time ≤ 5. Only the A/B branch gets another question: are absences ≤ {childCut.toFixed(1)}? This separates A from B while C and D remain together.</p><label className={styles.childSlider} htmlFor="child-cut">Absences in the left branch <strong>{childCut.toFixed(1)}</strong><input id="child-cut" type="range" min="8.1" max="11.9" step="0.1" value={childCut} onChange={(event) => setChildCut(Number(event.target.value))} /></label><div className={styles.nestedSse}>Three-leaf training SSE <strong>{nestedSse.toFixed(2)}</strong><small>Compared with SSE 5 for the one-split tree.</small></div></div>
+      <div className={styles.nestedPlane}><FeaturePlane feature="study" cut={5} recursive childCut={childCut} /></div>
+    </div>
+    <p className={styles.footnote}>The point coordinates use this example’s synthetic values: A (2 hours, 12 absences, grade 7), B (3, 8, 10), C (7, 2, 16), D (8, 4, 15). The extra split is illustrative; it describes this tiny sample, not a causal effect.</p>
+  </section>;
 }
 
 export function TreeSplitLab() {
@@ -82,7 +158,9 @@ export function TreeSplitLab() {
         <div className={styles.metric}><span>Within-leaf SSE</span><strong>{current.error.toFixed(2)}</strong><small>reduction from stump: {reduction.toFixed(2)}</small></div>
       </div>
     </div>
-    <div className={styles.mathBand}><span>THE TREE’S PREDICTION</span><strong>f̂(x) = Σ<sub>m=1</sub><sup>M</sup> c<sub>m</sub> · 𝟙[x ∈ R<sub>m</sub>]</strong><p>Each terminal region R<sub>m</sub> gets one constant c<sub>m</sub>. Under squared error, that constant is the mean outcome in the leaf.</p></div>
+    <TwoFeatureSplitLab />
+    <TreePredictionEquation />
+    <p className={styles.mathExplanation}>Each terminal region R<sub>m</sub> gets one constant c<sub>m</sub>. Under squared error, that constant is the mean outcome in the leaf.</p>
     <div className={styles.pruning}>
       <div><p className={styles.eyebrow}>REGULARIZE THE TREE</p><h4>How expensive is another leaf?</h4><p>Cost-complexity pruning adds α for every leaf. Compare the current split with a one-leaf stump.</p></div>
       <div className={styles.pruneControl}><label htmlFor="tree-alpha">Leaf penalty α <strong>{alpha}</strong></label><input id="tree-alpha" type="range" min="0" max="60" step="1" value={alpha} onChange={(event) => setAlpha(Number(event.target.value))} /><div className={styles.costCompare}><span>Stump: 54 + α = <b>{stumpCost.toFixed(1)}</b></span><span>Split: {current.error.toFixed(1)} + 2α = <b>{splitCost.toFixed(1)}</b></span></div><p className={styles.costWinner} aria-live="polite">{chooseSplit ? 'Keep the split: its fit improvement is worth the extra leaf.' : 'Prune to the stump: the extra leaf costs more than it saves.'}</p></div>
@@ -162,7 +240,8 @@ export function BoostingLab() {
       <div><label htmlFor="boost-rate">Learning rate η <strong>{eta.toFixed(1)}</strong></label><input id="boost-rate" type="range" min="0.1" max="1" step="0.1" value={eta} onChange={(event) => setEta(Number(event.target.value))} /><p>What fraction of each correction do we add?</p></div>
       <div><label htmlFor="boost-stages">Number of trees M <strong>{stages}</strong></label><input id="boost-stages" type="range" min="0" max="10" step="1" value={stages} onChange={(event) => setStages(Number(event.target.value))} /><p>How many correction steps have we taken?</p></div>
     </div>
-    <div className={styles.boostEquation}><span>STAGEWISE UPDATE</span><strong>F<sub>m</sub>(x) = F<sub>m−1</sub>(x) + η h<sub>m</sub>(x)</strong><p>For tree 1, F₀ = 12; the residual means are {firstLeftUpdate.toFixed(1)} and +{firstRightUpdate.toFixed(1)}. With η = {eta.toFixed(1)}, the first predictions are {(12 + eta * firstLeftUpdate).toFixed(2)} and {(12 + eta * firstRightUpdate).toFixed(2)}.</p></div>
+    <StagewiseUpdateEquation />
+    <p className={styles.mathExplanation}>For tree 1, F₀ = 12; the residual means are {firstLeftUpdate.toFixed(1)} and +{firstRightUpdate.toFixed(1)}. With η = {eta.toFixed(1)}, the first predictions are {(12 + eta * firstLeftUpdate).toFixed(2)} and {(12 + eta * firstRightUpdate).toFixed(2)}.</p>
     <BoostingHistory eta={eta} stages={stages} />
     <div className={styles.currentModel}><div><span>AFTER {stages} {stages === 1 ? 'TREE' : 'TREES'}</span><strong>Training SSE {sseNow.toFixed(2)}</strong><small>leaf targets: 8.5 and 15.5</small></div><div><span>WHAT THE MODEL CURRENTLY PREDICTS</span><strong>Low study: {current.left.toFixed(2)} <i>·</i> High study: {current.right.toFixed(2)}</strong><small>Correction tree output is a change, not a final prediction.</small></div></div>
     <div className={styles.residualTableWrap}><table className={styles.residualTable}><caption>Residuals after the selected number of correction trees</caption><thead><tr><th>Student</th><th>Observed y</th><th>Current F<sub>M</sub></th><th>Residual y − F<sub>M</sub></th></tr></thead><tbody>{residuals.map((student) => <tr key={student.id}><th>{student.id}</th><td>{student.y}</td><td>{student.prediction.toFixed(2)}</td><td className={student.residual >= 0 ? styles.positiveResidual : styles.negativeResidual}>{student.residual > 0 ? '+' : ''}{student.residual.toFixed(2)}</td></tr>)}</tbody></table></div>

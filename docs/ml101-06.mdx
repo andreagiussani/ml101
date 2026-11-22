@@ -4,17 +4,19 @@ title: 'Trees and boosting: one question, one correction'
 description: 'Explore how decision trees partition data and how gradient boosting builds predictions one correction at a time.'
 sidebar_position: 6
 slug: /ml101-06
+hide_title: true
 ---
 
 import { DiscussionQuestion } from '@site/src/components/LectureTools';
 import { Lecture06Hero, TreeSplitLab, ClassificationImpurityLab, BoostingLab, LogisticGradientCard, EarlyStoppingLab } from '@site/src/components/LectureTools/Lecture06';
+import { LeafMeanEquation, SplitObjectiveEquation, PruningEquation, InitialPredictionEquation, SquaredLossEquation, TreePredictionEquation } from '@site/src/components/LectureTools/Lecture06Math';
 import styles from '@site/src/components/LectureTools/lecture06.module.css';
 
 <Lecture06Hero />
 
 Two ideas organize this lesson. **A decision tree divides the feature space into regions. Gradient boosting builds a predictive function by adding trees that correct what the current model still gets wrong.** We will use the same small student-grade example throughout, then generalize the mathematics.
 
-<nav className={styles.twoUp} aria-label="Lecture roadmap">
+<nav className={styles.twoUp} aria-label="On this page">
   <a className={styles.concept} href="#trees"><span>SECTION 01</span><h3>Decision trees</h3><p>Partitions, leaf predictions, split quality, impurity, and complexity.</p></a>
   <a className={styles.concept} href="#boosting"><span>SECTION 02</span><h3>Gradient boosting</h3><p>Baselines, residuals, functional gradients, learning rate, and stopping.</p></a>
 </nav>
@@ -29,18 +31,19 @@ A decision tree asks a question such as **“Is study time at most five hours?�
 
 For squared-error regression, the best constant prediction in a region R is its sample mean. We can derive it by differentiating the sum of squared residuals with respect to the constant c:
 
-<div className={styles.mathCard}>
-  <div className={styles.equation} role="math" aria-label="The leaf prediction is the constant minimizing the sum of squared errors, which equals the mean response in that leaf.">
-    ĉ<sub>R</sub> = arg min<sub>c</sub> Σ<sub>i:xᵢ∈R</sub>(yᵢ − c)² = ȳ<sub>R</sub>
-  </div>
-  <p>Our leaf for A and B therefore predicts (7 + 10) / 2 = <strong>8.5</strong>. The leaf for C and D predicts (16 + 15) / 2 = <strong>15.5</strong>. A regression tree is a piecewise-constant function: f̂(x) = Σ<sub>m</sub> c<sub>m</sub> · 𝟙[x ∈ R<sub>m</sub>].</p>
-</div>
+<LeafMeanEquation />
+
+Our leaf for A and B therefore predicts (7 + 10) / 2 = <strong>8.5</strong>. The leaf for C and D predicts (16 + 15) / 2 = <strong>15.5</strong>. A regression tree is a piecewise-constant function:
+
+<TreePredictionEquation />
 
 ### Let CART search for a useful question
 
 At a node, CART considers candidate features j and thresholds s. For each candidate it calculates the error in the left and right children after assigning each child its own mean. The greedy split chooses the largest immediate reduction:
 
-<div className={styles.mathCard}><div className={`${styles.equation} ${styles.equationSmall}`} role="math" aria-label="Choose the feature and threshold minimizing the sum of squared errors in the left and right child nodes.">(j*, s*) = arg min<sub>j,s</sub> [ SSE(x<sub>ij</sub> ≤ s) + SSE(x<sub>ij</sub> &gt; s) ]</div><p>It then repeats inside the new nodes until a stopping rule is reached. This is a local search: the best next split does not guarantee the globally best complete tree.</p></div>
+<SplitObjectiveEquation />
+
+It then repeats inside the new nodes until a stopping rule is reached. This is a local search: the best next split does not guarantee the globally best complete tree.
 
 Use the slider to move the question and see each leaf’s mean and squared error change. At the five-hour split, the stump’s SSE drops from 54 to 5.
 
@@ -56,11 +59,13 @@ For a binary target, a leaf can predict the share p of class 1. CART can compare
 
 ### Tree size is regularization
 
-A shallow tree uses a few broad regions. It is easier to explain and often more stable, but can miss structure. A deep tree can represent finer patterns, but small leaves make its predictions unstable. Maximum depth, minimum leaf size, and pruning are model-complexity choices, much like regularization in Lecture 3.
+A shallow tree uses a few broad regions. It is easier to explain and often more stable, but can miss structure. A deep tree can represent finer patterns, but small leaves make its predictions unstable. Maximum depth, minimum leaf size, and pruning are model-complexity choices, much like regularization in linear models.
 
 Cost-complexity pruning scores a subtree by its fit plus a charge for its leaves:
 
-<div className={styles.mathCard}><div className={styles.equation} role="math" aria-label="Cost-complexity pruning minimizes training error plus alpha times the number of terminal leaves.">T̂<sub>α</sub> = arg min<sub>T ⊆ T<sub>max</sub></sub> [ Σ<sub>m∈L(T)</sub> SSE<sub>m</sub> + α |L(T)| ]</div><p>At α = 0, leaves are free. Increase α and a split must earn its place by reducing error enough to justify the extra leaf. Use validation or cross-validation on development data to choose depth, minimum leaf size, or α; keep the final test set outside that search.</p></div>
+<PruningEquation />
+
+At α = 0, leaves are free. Increase α and a split must earn its place by reducing error enough to justify the extra leaf. Use validation or cross-validation on development data to choose depth, minimum leaf size, or α; keep the final test set outside that search.
 
 ## The pivot · many trees can cooperate
 
@@ -75,7 +80,9 @@ A tree is a complete model by itself. **Bagging** trains trees in parallel on bo
 
 The four students’ grades average to 12. Under squared error, that is the best constant prediction before we know anything else:
 
-<div className={styles.mathCard}><div className={styles.equation} role="math" aria-label="The initial prediction is the constant minimizing total training loss.">F₀(x) = arg min<sub>c</sub> Σ<sub>i</sub> L(yᵢ,c) &nbsp; ; &nbsp; for squared error, F₀(x) = ȳ = 12</div><p>Every student gets the same starting prediction. Residuals tell us which direction each prediction needs to move.</p></div>
+<InitialPredictionEquation />
+
+Every student gets the same starting prediction. Residuals tell us which direction each prediction needs to move.
 
 | Student | Study hours | Grade y | Starting F₀ | Residual y − F₀ |
 |:--|--:|--:|--:|--:|
@@ -94,7 +101,9 @@ The plot shows two views of this fixed-split teaching example. As M grows, each 
 
 For half squared-error loss, differentiate with respect to the current prediction F:
 
-<div className={styles.mathCard}><div className={styles.equation} role="math" aria-label="For half squared error, the negative derivative of loss with respect to the prediction equals the residual.">L(y,F) = ½(y − F)² &nbsp; ; &nbsp; ∂L/∂F = F − y &nbsp; ; &nbsp; −∂L/∂F = y − F</div><p>So fitting a regression tree to residuals is exactly fitting it to the negative gradient of the loss with respect to the current predictions. The next tree approximates a descent direction in function space. That is the “gradient” in gradient boosting.</p></div>
+<SquaredLossEquation />
+
+So fitting a regression tree to residuals is exactly fitting it to the negative gradient of the loss with respect to the current predictions. The next tree approximates a descent direction in function space. That is the “gradient” in gradient boosting.
 
 For another differentiable loss, the algorithm computes **pseudo-responses**—negative loss gradients at the current predictions—then fits a small regression tree to them. Leaf updates may need a loss-specific optimization; they are not always simply the mean pseudo-response.
 
@@ -124,6 +133,8 @@ If a tree often splits on study time, that means the feature helps distinguish o
 
 <DiscussionQuestion>In one sentence, what is the difference between a leaf prediction and a boosting tree’s output? Why can training SSE continue to fall while validation performance gets worse?</DiscussionQuestion>
 
+<p className={styles.nextLesson}><span>WORKED CALCULATIONS</span><a href="/lectures/math-examples">Trees and boosting: step-by-step math →</a></p>
+
 ## Further reading
 
 Breiman, Friedman, Olshen & Stone (1984), *Classification and Regression Trees*.
@@ -134,4 +145,4 @@ Friedman (2001), “Greedy Function Approximation: A Gradient Boosting Machine.�
 
 [scikit-learn: Gradient Boosting](https://scikit-learn.org/stable/modules/ensemble.html#gradient-boosting) · [Decision Trees](https://scikit-learn.org/stable/modules/tree.html)
 
-<p className={styles.nextLesson}><span>UP NEXT</span><a href={'/lectures/ml101-05'}>Review Lecture 05 · Data leakage ↗</a></p>
+<p className={styles.nextLesson}><span>RELATED TOPIC</span><a href={'/lectures/ml101-05'}>Data leakage: follow the information ↗</a></p>
