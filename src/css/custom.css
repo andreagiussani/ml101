@@ -1,6 +1,11 @@
-@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Newsreader:opsz,wght@6..72,400;6..72,500;6..72,600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Newsreader:opsz,wght@6..72,400;6..72,500;6..72,600&family=STIX+Two+Math&family=STIX+Two+Text:wght@400;500;600&display=swap');
 
 :root {
+  --ml101-math-font: 'STIX Two Math', 'Cambria Math', 'Latin Modern Math', 'STIXGeneral', serif;
+  --ml101-math-accent: #007f86;
+  --ml101-math-panel: #f3f9f8;
+  --ml101-math-border: #c8e0df;
+  --ml101-math-ink: #123a37;
   --ifm-color-primary: #007f86;
   --ifm-color-primary-dark: #006f75;
   --ifm-color-primary-darker: #00696f;
@@ -26,6 +31,7 @@ body { background: #f7f9fb; color: #17263a; }
 .footer { border-top: 1px solid #e4e9ee; }
 .footer__copyright small { display: block; max-width: 760px; margin: .45rem auto 0; line-height: 1.5; }
 .theme-doc-markdown { max-width: 760px; }
+.theme-doc-markdown:has(.mathPage) { max-width: 100%; }
 .theme-doc-markdown h1 { font-size: clamp(2rem, 4vw, 3rem); }
 .theme-doc-markdown h2 { margin-top: 3.5rem; padding-top: 1.25rem; border-top: 1px solid #e4e9ee; font-size: 1.8rem; }
 .theme-doc-markdown h3 { font-size: 1.3rem; }
@@ -34,4 +40,6 @@ body { background: #f7f9fb; color: #17263a; }
 .chapterDek { margin-top: -.6rem; margin-bottom: 2rem; color: #007f86; font-family: 'Newsreader', Georgia, serif; font-size: 1.35rem; }
 a { text-underline-offset: 3px; }
 ::selection { background: #d7eceb; }
+/* Use a dedicated math face for equations across every topic and interactive. */
+.theme-doc-markdown math, [role="math"], .theme-doc-markdown .math, .theme-doc-markdown var { font-family: var(--ml101-math-font); }
 @media (max-width: 996px) { .theme-doc-sidebar-container { display: none; } }
