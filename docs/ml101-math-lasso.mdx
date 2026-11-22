@@ -1,0 +1,29 @@
+---
+id: ml101-math-lasso
+title: 'LASSO: The Algebra Behind Zero'
+description: 'A worked one-coefficient derivation of the LASSO zero, its Ridge counterpart, and the soft-threshold rule.'
+sidebar_position: 7
+slug: /lasso-math
+hide_title: true
+---
+
+import { LassoMathHero, LassoZeroDerivation, LassoThresholdExplorer } from '@site/src/components/LectureTools/Lecture07Math';
+import styles from '@site/src/components/LectureTools/lecture07Math.module.css';
+
+<div className={styles.mathPage}>
+<LassoMathHero />
+
+<section className={styles.chapter}>
+  <h2>One coefficient, two penalties</h2>
+  <p>Suppose the best coefficient without regularization is 0.1. We compare Ridge and LASSO using the same penalty strength, λ = 0.2. The worked example uses a squared-error term without a one-half multiplier, so its LASSO threshold is λ/2.</p>
+  <LassoZeroDerivation />
+</section>
+
+<section className={styles.chapter}>
+  <h2>Move the threshold</h2>
+  <p>Change the unregularized coefficient and penalty. The graph shows how the LASSO rule maps a whole interval of small coefficients to exactly zero.</p>
+  <LassoThresholdExplorer />
+</section>
+
+<div className={styles.backLink}><span>RELATED TOPIC</span><a href="/lectures/ml101-03">Regularization: Ridge, LASSO, and Elastic Net →</a></div>
+</div>

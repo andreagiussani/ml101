@@ -45,12 +45,12 @@ export default function Home(): React.ReactElement {
             <span className={styles.arrow} aria-hidden="true">↗</span>
           </Link>
           <Link className={styles.lectureCard} to="/lectures/lasso-math">
-            <span className={styles.lectureTitle}>LASSO math</span>
+            <span className={styles.lectureTitle}>LASSO: The Algebra Behind Zero</span>
             <span className={styles.lectureSubtitle}>Why a coefficient can become exactly zero.</span>
             <span className={styles.arrow} aria-hidden="true">↗</span>
           </Link>
           <Link className={styles.lectureCard} to="/lectures/math-examples">
-            <span className={styles.lectureTitle}>Trees &amp; boosting math</span>
+            <span className={styles.lectureTitle}>Trees &amp; boosting: worked calculations</span>
             <span className={styles.lectureSubtitle}>Worked calculations for tree splits, pruning, residuals, and gradient boosting.</span>
             <span className={styles.arrow} aria-hidden="true">↗</span>
           </Link>

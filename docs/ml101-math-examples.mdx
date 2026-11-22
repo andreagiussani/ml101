@@ -1,0 +1,78 @@
+---
+id: ml101-math-examples
+title: 'Trees & Boosting: Worked Calculations'
+description: 'Worked calculations for regression trees, pruning, residuals, and gradient boosting.'
+sidebar_position: 8
+slug: /math-examples
+hide_title: true
+---
+
+import { MathExamplesHero, GeneralMeanMath, TreeMeanMath, ParentSseMath, SplitSseMath, PruningMath, ResidualMath, UpdatedResidualMath, GradientMath, ShrinkageMath, ClassificationGradientMath } from '@site/src/components/LectureTools/Lecture07Math';
+import styles from '@site/src/components/LectureTools/lecture07Math.module.css';
+
+<div className={styles.mathPage}>
+<MathExamplesHero />
+<nav className={styles.contents} aria-label="Worked examples"><a href="#leaf-mean"><span>01</span> Leaf mean</a><a href="#split-gain"><span>02</span> Split gain</a><a href="#pruning"><span>03</span> Pruning</a><a href="#first-correction"><span>04</span> First correction</a><a href="#gradient"><span>05</span> Gradient</a><a href="#shrinkage"><span>06</span> Repeated updates</a><a href="#classification"><span>07</span> Classification</a></nav>
+
+<section className={styles.chapter}>
+  <h2 id="leaf-mean">1 · Why is a leaf prediction the mean?</h2>
+  <p>Start with this four-student example. A one-split tree asks whether study time is at most five hours. The left region <em>R</em> contains students A and B, as the table shows.</p>
+  <table className={`${styles.workedTable} ${styles.leafContextTable}`} aria-label="Student data and membership in the left leaf"><thead><tr><th>Student</th><th>Study time</th><th>Absences</th><th>Grade y</th><th>In R?</th></tr></thead><tbody><tr><th>A</th><td>2 h</td><td>12</td><td>7</td><td>Yes</td></tr><tr><th>B</th><td>3 h</td><td>8</td><td>10</td><td>Yes</td></tr><tr><th>C</th><td>7 h</td><td>2</td><td>16</td><td>No</td></tr><tr><th>D</th><td>8 h</td><td>4</td><td>15</td><td>No</td></tr></tbody></table>
+  <p>Within this leaf, choose one constant prediction <em>c</em> to minimize squared error. We only need A and B’s grades - 7 and 10 - for this calculation.</p>
+  <GeneralMeanMath />
+  <TreeMeanMath />
+  <div className={styles.result}><strong>Answer:</strong> the left leaf predicts 8.5. The same calculation for grades 16 and 15 gives 15.5 in the right leaf. Differentiating the objective shows the mean is the unique minimizer under squared-error loss.</div>
+</section>
+
+<section className={styles.chapter}>
+  <h2 id="split-gain">2 · How much does the first split help?</h2>
+  <p>The four grades are 7, 10, 16, and 15. Their overall mean is 12. The parent node’s squared error is:</p>
+  <ParentSseMath />
+  <p>Now ask either <strong>study time ≤ 5 hours</strong> or <strong>absences ≤ 6</strong>. In the example data, A and B have grades 7 and 10; C and D have grades 16 and 15. Both questions put those same pairs on opposite sides.</p>
+  <table className={styles.workedTable}><thead><tr><th>Candidate question</th><th>YES group</th><th>NO group</th><th>Child SSE</th></tr></thead><tbody><tr><th>Study time ≤ 5</th><td>A, B</td><td>C, D</td><td>5</td></tr><tr><th>Absences ≤ 6</th><td>C, D</td><td>A, B</td><td>5</td></tr></tbody></table>
+  <SplitSseMath />
+  <div className={styles.result}>Both candidate questions reduce SSE by <strong>54 − 5 = 49</strong>. They tie on this sample. A tie in immediate split score does not mean the variables are interchangeable in every future tree or that either feature causes grades to change.</div>
+</section>
+
+<section className={styles.chapter}>
+  <h2>3 · What does one more split buy?</h2>
+  <p>Grow a second question only inside the low-study branch: <strong>absences ≤ 10?</strong> Student B (8 absences) enters one new leaf; student A (12) enters the other. C and D remain together. The three leaf predictions are 7, 10, and 15.5; the training SSE becomes 0.5.</p>
+  <div className={styles.result}>The lower error fits these four training rows closely. It does not establish that a deeper tree will predict new students better. Tree depth and leaf size need validation, and the apparent relationship between study and grades is not a causal estimate.</div>
+  <p>Cost-complexity pruning compares fit against the number of leaves. With α charged per leaf, the stump costs 54 + α and this one-split tree costs 5 + 2α:</p>
+  <PruningMath />
+  <p className={styles.figureNote}>For this unnormalized four-observation SSE, the split wins when α &lt; 49; at α = 49 the two choices tie. Implementations may normalize loss differently, which changes the numeric scale of α.</p>
+</section>
+
+<section className={styles.chapter}>
+  <h2 id="first-correction">4 · From residuals to the first boosted prediction</h2>
+  <p>Start with F₀ = 12 for everyone. A residual is observed grade minus current prediction. The correction tree uses the same five-hour split and predicts the average residual in each leaf.</p>
+  <table className={styles.workedTable}><thead><tr><th>Student</th><th>y</th><th>F₀</th><th>r = y − F₀</th></tr></thead><tbody><tr><th>A</th><td>7</td><td>12</td><td>−5</td></tr><tr><th>B</th><td>10</td><td>12</td><td>−2</td></tr><tr><th>C</th><td>16</td><td>12</td><td>+4</td></tr><tr><th>D</th><td>15</td><td>12</td><td>+3</td></tr></tbody></table>
+  <ResidualMath />
+  <p>With learning rate η = 0.5, only half of each correction is added. After one tree, A and B receive 10.25; C and D receive 13.75.</p>
+  <UpdatedResidualMath />
+</section>
+
+<section className={styles.chapter}>
+  <h2 id="gradient">5 · Why is this called gradient boosting?</h2>
+  <p>For half squared-error loss, differentiate with respect to the current prediction F. The negative gradient is exactly the residual used above.</p>
+  <GradientMath />
+  <p>A regression tree approximates that negative-gradient direction with a small, piecewise-constant correction. Each update changes the function; the next tree is fit to the new pseudo-responses.</p>
+</section>
+
+<section className={styles.chapter}>
+  <h2 id="shrinkage">6 · What do repeated corrections add up to?</h2>
+  <p>Keep the same split for every round. In a leaf with target mean μ, each update moves the current prediction a fraction η of the remaining gap. Starting from F₀, the gap shrinks geometrically.</p>
+  <ShrinkageMath />
+  <p>For the two leaves, the within-leaf SSE is 5. Initially, the distance between each leaf mean and the baseline is 3.5, and each leaf has two observations. After M updates the remaining between-leaf error is 49(1 − η)<sup>2M</sup>, giving the expression above. With η = 0.5, this matches the report’s <span className={styles.inlineMath}>5 + 49(0.25)<sup>M</sup></span>.</p>
+  <div className={styles.result}>This closed form relies on the deliberately fixed split and squared-error loss. Real gradient boosting can change its split and feature at every stage; validation decides how many stages to keep.</div>
+</section>
+
+<section className={styles.chapter}>
+  <h2 id="classification">7 · Classification uses pseudo-residuals too</h2>
+  <p>For binary labels, let F(x) be the log-odds score and p(x) = σ(F(x)) the predicted probability. Under logistic loss, the next tree learns y − p: the gap between the observed label and its current probability.</p>
+  <ClassificationGradientMath />
+  <p>So the common recipe is not “fit a tree to the wrong answers.” It is: choose a loss, compute its negative gradient at the current predictions, and fit a small tree to approximate that correction.</p>
+</section>
+
+<div className={styles.backLink}><span>EXPLORE THE INTERACTIVE EXAMPLES</span><a href="/lectures/ml101-06">Trees and boosting →</a></div>
+</div>

@@ -36,11 +36,11 @@ export default function Material(): React.ReactElement {
         <span className={styles.arrow} aria-hidden="true">↗</span>
       </Link>
       <Link className={styles.card} to="/lectures/lasso-math">
-        <span className={styles.copy}><strong>LASSO math</strong><small>Why a coefficient can become exactly zero.</small></span>
+        <span className={styles.copy}><strong>LASSO: The Algebra Behind Zero</strong><small>Why a coefficient can become exactly zero.</small></span>
         <span className={styles.arrow} aria-hidden="true">↗</span>
       </Link>
       <Link className={styles.card} to="/lectures/math-examples">
-        <span className={styles.copy}><strong>Worked math: trees and boosting</strong><small>Step-by-step calculations for regression trees and gradient boosting.</small></span>
+        <span className={styles.copy}><strong>Trees &amp; Boosting: Worked Calculations</strong><small>Step-by-step calculations for regression trees and gradient boosting.</small></span>
         <span className={styles.arrow} aria-hidden="true">↗</span>
       </Link>
     </main>
